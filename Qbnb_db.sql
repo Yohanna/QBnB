@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2016 at 12:57 AM
+-- Generation Time: Mar 10, 2016 at 09:19 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -32,7 +32,6 @@ CREATE TABLE `bookings` (
   `booking_id` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL COMMENT '1: Confirmed, 2:Rejected, 3:Waiting',
   `check_in` date NOT NULL,
-  `check_out` date NOT NULL,
   `property_id` int(11) NOT NULL,
   `tenant_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for booking info, with status being a flag (Ints)';
@@ -49,10 +48,12 @@ CREATE TABLE `bookings` (
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`booking_id`, `status`, `check_in`, `check_out`, `property_id`, `tenant_id`) VALUES
-(1, 1, '2016-02-17', '2016-02-18', 1, 1),
-(2, 2, '2016-02-23', '2016-02-23', 2, 2),
-(3, 3, '2016-02-17', '2016-02-17', 3, 3);
+INSERT INTO `bookings` (`booking_id`, `status`, `check_in`, `property_id`, `tenant_id`) VALUES
+(1, 1, '2016-02-17', 1, 1),
+(2, 2, '2016-02-23', 2, 2),
+(3, 3, '2016-02-17', 3, 3),
+(4, 1, '2016-03-31', 2, 7),
+(5, 2, '2016-04-27', 5, 7);
 
 -- --------------------------------------------------------
 
@@ -66,7 +67,8 @@ CREATE TABLE `comments` (
   `property_id` int(11) NOT NULL,
   `comment_text` text COLLATE utf16_unicode_520_ci NOT NULL,
   `reply_text` text COLLATE utf16_unicode_520_ci,
-  `commenter_id` int(11) NOT NULL
+  `commenter_id` int(11) NOT NULL,
+  `rating` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for Comments';
 
 --
@@ -81,11 +83,11 @@ CREATE TABLE `comments` (
 -- Dumping data for table `comments`
 --
 
-INSERT INTO `comments` (`comment_id`, `timestamp`, `property_id`, `comment_text`, `reply_text`, `commenter_id`) VALUES
-(1, '2016-03-07 23:20:23', 1, 'Great place and location.', NULL, 1),
-(2, '2016-03-07 23:20:23', 2, 'Great location. Unfortunately place was mostly unfurnished.', NULL, 2),
-(3, '2016-03-07 23:20:23', 3, 'It was clean.', 'Thanks for the comment!', 3),
-(4, '2016-03-07 23:20:23', 4, 'Best place at his price!!', 'Glad you liked it!', 4);
+INSERT INTO `comments` (`comment_id`, `timestamp`, `property_id`, `comment_text`, `reply_text`, `commenter_id`, `rating`) VALUES
+(1, '2016-03-07 23:20:23', 1, 'Great place and location.', NULL, 1, 3),
+(2, '2016-03-07 23:20:23', 2, 'Great location. Unfortunately place was mostly unfurnished.', NULL, 2, 5),
+(3, '2016-03-07 23:20:23', 3, 'It was clean.', 'Thanks for the comment!', 3, 4),
+(4, '2016-03-10 19:43:18', 5, 'Property was clean like the pictures. Host was nice. Would definitely stay here again! ', NULL, 7, 5);
 
 -- --------------------------------------------------------
 
@@ -94,21 +96,26 @@ INSERT INTO `comments` (`comment_id`, `timestamp`, `property_id`, `comment_text`
 --
 
 CREATE TABLE `district` (
-  `District_name` varchar(40) COLLATE utf16_unicode_520_ci NOT NULL COMMENT 'Name for the District',
+  `District` varchar(40) COLLATE utf16_unicode_520_ci NOT NULL,
   `POI` varchar(100) COLLATE utf16_unicode_520_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='Table storing distract information';
 
 --
 -- RELATIONS FOR TABLE `district`:
+--   `District`
+--       `properties` -> `district`
 --
 
 --
 -- Dumping data for table `district`
 --
 
-INSERT INTO `district` (`District_name`, `POI`) VALUES
-('Downtown', 'Parliament Hill, Supreme Court'),
-('Kanata', 'Kanata Lakes');
+INSERT INTO `district` (`District`, `POI`) VALUES
+('Kanata', 'Kanata Lakes'),
+('Nepean', 'Canadian War Museum'),
+('Nepean', 'Parliament Hill'),
+('Nepean', 'Rideau Canal'),
+('Nepean', 'Supreme Court');
 
 -- --------------------------------------------------------
 
@@ -118,17 +125,19 @@ INSERT INTO `district` (`District_name`, `POI`) VALUES
 
 CREATE TABLE `features` (
   `property_id` int(11) NOT NULL,
-  `internet` tinyint(1) NOT NULL,
-  `gym` tinyint(1) NOT NULL,
-  `pet_allowed` tinyint(1) NOT NULL,
-  `tv` tinyint(1) NOT NULL,
-  `washer` tinyint(1) NOT NULL,
-  `parking` tinyint(1) NOT NULL,
-  `patio` tinyint(1) NOT NULL
+  `internet` tinyint(1) NOT NULL DEFAULT '0',
+  `gym` tinyint(1) NOT NULL DEFAULT '0',
+  `pet_allowed` tinyint(1) NOT NULL DEFAULT '0',
+  `tv` tinyint(1) NOT NULL DEFAULT '0',
+  `washer` tinyint(1) NOT NULL DEFAULT '0',
+  `parking` tinyint(1) NOT NULL DEFAULT '0',
+  `patio` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='Additional table to keep track a list of features';
 
 --
 -- RELATIONS FOR TABLE `features`:
+--   `property_id`
+--       `properties` -> `property_id`
 --   `property_id`
 --       `properties` -> `property_id`
 --
@@ -141,7 +150,36 @@ INSERT INTO `features` (`property_id`, `internet`, `gym`, `pet_allowed`, `tv`, `
 (1, 1, 0, 1, 1, 1, 1, 1),
 (2, 1, 0, 0, 1, 0, 0, 0),
 (3, 1, 1, 1, 1, 1, 1, 1),
-(4, 1, 1, 1, 1, 1, 1, 1);
+(4, 1, 1, 1, 1, 1, 1, 1),
+(5, 1, 0, 1, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `picture`
+--
+
+CREATE TABLE `picture` (
+  `pic_id` int(11) NOT NULL,
+  `pic_path` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `property_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- RELATIONS FOR TABLE `picture`:
+--   `property_id`
+--       `properties` -> `property_id`
+--
+
+--
+-- Dumping data for table `picture`
+--
+
+INSERT INTO `picture` (`pic_id`, `pic_path`, `property_id`) VALUES
+(1, '/home/user/joe/pics/1.jpg', 2),
+(2, '/home/user/joe/pics/2.jpg', 3),
+(3, '/home/user/joe/pics/3.jpg', 3),
+(5, '/home/yohanna/pic.jpg', 5);
 
 -- --------------------------------------------------------
 
@@ -155,24 +193,25 @@ CREATE TABLE `properties` (
   `address` varchar(100) COLLATE utf16_unicode_520_ci NOT NULL,
   `district` varchar(20) COLLATE utf16_unicode_520_ci NOT NULL,
   `type` varchar(20) COLLATE utf16_unicode_520_ci NOT NULL,
-  `price` float NOT NULL COMMENT 'Price per month',
-  `rating` int(11) NOT NULL,
-  `pictures` text COLLATE utf16_unicode_520_ci COMMENT 'Property pictures stored as comma separated file paths list'
+  `price` float NOT NULL COMMENT 'Price per month'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for the property';
 
 --
 -- RELATIONS FOR TABLE `properties`:
+--   `supplier_id`
+--       `user` -> `user_id`
 --
 
 --
 -- Dumping data for table `properties`
 --
 
-INSERT INTO `properties` (`property_id`, `supplier_id`, `address`, `district`, `type`, `price`, `rating`, `pictures`) VALUES
-(1, 1, '89 Waterfall Ave. Ottawa ON', 'Kanata', 'House', 220, 5, NULL),
-(2, 1, '121 Ontario St, Ottawa ON', 'Kanata', 'Town House', 200, 3, '/home/user/joe/pics/1.jpg'),
-(3, 3, '2331 London St, Ottawa ON', 'Downtown', 'Apartment', 120, 4, '/home/user/joe/pics/2.jpg,/home/user/joe/pics/3.jpg'),
-(4, 2, '43 Centre St. Ottawa ON', 'Downtown', 'Apartment', 180, 4, NULL);
+INSERT INTO `properties` (`property_id`, `supplier_id`, `address`, `district`, `type`, `price`) VALUES
+(1, 1, '89 Waterfall Ave. Ottawa ON', 'Kanata', 'House', 220),
+(2, 1, '121 Ontario St, Ottawa ON', 'Kanata', 'Town House', 200),
+(3, 3, '2331 London St, Ottawa ON', 'Nepean', 'Apartment', 120),
+(4, 2, '43 Centre St. Ottawa ON', 'Nepean', 'Apartment', 180),
+(5, 7, '123 West St.', 'Kanata', 'House', 250);
 
 -- --------------------------------------------------------
 
@@ -185,7 +224,7 @@ CREATE TABLE `user` (
   `FName` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
   `LName` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
   `email` varchar(32) COLLATE utf16_unicode_520_ci NOT NULL,
-  `password` char(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL COMMENT 'MD5 Password Hash',
+  `password` varchar(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `phone_no` char(10) COLLATE utf16_unicode_520_ci NOT NULL,
   `grad_year` year(4) NOT NULL,
   `faculty` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
@@ -202,10 +241,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `FName`, `LName`, `email`, `password`, `phone_no`, `grad_year`, `faculty`, `degree_type`, `is_admin`) VALUES
-(1, 'Raquel', 'Smith', 'smith_raquel@queensu.ca', '\0r\0a\0q\0u\0e\0l\0s\0m\0i\0t\0h', '1234567890', 2003, 'Science', 'Bsc', 1),
+(1, 'Raquel', 'Smith', 'smith_raquel@queensu.ca', '\0r\0a\0q\0u\0e\0l\0s\0m\0i\0t\0h', '1234567890', 2003, 'Science', 'Bsc', 0),
 (2, 'Mai', 'Wu', 'mai_wu@queensu.ca', '\0m\0a\0i\0w\0u', '1234567899', 2004, 'Con-ed', 'Ba', 0),
 (3, 'Jeffery', 'Lin', 'jeffery_lin@queensu.ca', '\0j\0e\0f\0f\0e\0r\0y\0l\0i\0n', '1234567889', 2001, 'Computing', 'Bcs', 0),
-(4, 'Yohanna', 'Gadelrab', 'yg@queensu.ca', 'pass', '333', 2017, 'ECE', 'BA', 1);
+(5, 'Dylan', 'Liu', 'dl@queensu.ca', 'dylanpass', '6133333333', 2017, 'Computing', 'BAs', 1),
+(6, 'Jack', 'Qiao', 'jq@queensu.ca', 'jackpass', '6133333333', 2017, 'Computing', 'BAs', 1),
+(7, 'Yohanna', 'Gadelrab', 'yg@queensu.ca', '12345678', '3333333333', 2017, 'ECE', 'B.Sc.', 0);
 
 --
 -- Indexes for dumped tables
@@ -233,7 +274,7 @@ ALTER TABLE `comments`
 -- Indexes for table `district`
 --
 ALTER TABLE `district`
-  ADD PRIMARY KEY (`District_name`,`POI`);
+  ADD PRIMARY KEY (`District`,`POI`);
 
 --
 -- Indexes for table `features`
@@ -242,10 +283,20 @@ ALTER TABLE `features`
   ADD PRIMARY KEY (`property_id`);
 
 --
+-- Indexes for table `picture`
+--
+ALTER TABLE `picture`
+  ADD PRIMARY KEY (`pic_id`) USING BTREE,
+  ADD UNIQUE KEY `pic_path` (`pic_path`),
+  ADD KEY `property_id_index` (`property_id`) USING BTREE;
+
+--
 -- Indexes for table `properties`
 --
 ALTER TABLE `properties`
-  ADD PRIMARY KEY (`property_id`);
+  ADD PRIMARY KEY (`property_id`),
+  ADD KEY `supplier_id_index` (`supplier_id`) USING BTREE,
+  ADD KEY `district` (`district`);
 
 --
 -- Indexes for table `user`
@@ -261,7 +312,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `comments`
 --
@@ -271,17 +322,22 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `features`
 --
 ALTER TABLE `features`
-  MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `picture`
+--
+ALTER TABLE `picture`
+  MODIFY `pic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `properties`
 --
 ALTER TABLE `properties`
-  MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Constraints for dumped tables
 --
@@ -299,6 +355,30 @@ ALTER TABLE `bookings`
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_commenter_id_constraint` FOREIGN KEY (`commenter_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comments_property_id_constraints` FOREIGN KEY (`property_id`) REFERENCES `properties` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `district`
+--
+ALTER TABLE `district`
+  ADD CONSTRAINT `district_constraint` FOREIGN KEY (`District`) REFERENCES `properties` (`district`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `features`
+--
+ALTER TABLE `features`
+  ADD CONSTRAINT `features_property_id_constraint` FOREIGN KEY (`property_id`) REFERENCES `properties` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `picture`
+--
+ALTER TABLE `picture`
+  ADD CONSTRAINT `property_id_constraint` FOREIGN KEY (`property_id`) REFERENCES `properties` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `properties`
+--
+ALTER TABLE `properties`
+  ADD CONSTRAINT `supplier_id_constraint` FOREIGN KEY (`supplier_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
