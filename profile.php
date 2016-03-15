@@ -4,9 +4,6 @@
 
 define("nl", "<br />");
 
-echo __FILE__ . nl;
-
-
 //Create a user session or resume an existing one
 session_start();
 
