@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2016 at 04:54 AM
+-- Generation Time: Mar 16, 2016 at 05:00 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -28,13 +28,17 @@ USE `qbnb`;
 -- Table structure for table `bookings`
 --
 
-CREATE TABLE `bookings` (
-  `booking_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `bookings` (
+  `booking_id` int(11) NOT NULL AUTO_INCREMENT,
   `status` tinyint(4) NOT NULL COMMENT '1: Confirmed, 2:Rejected, 3:Waiting',
   `check_in` date NOT NULL,
   `property_id` int(11) NOT NULL,
-  `tenant_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for booking info, with status being a flag (Ints)';
+  `tenant_id` int(11) NOT NULL,
+  PRIMARY KEY (`booking_id`),
+  UNIQUE KEY `check_in` (`check_in`,`property_id`,`tenant_id`),
+  KEY `property_id_index` (`property_id`) USING BTREE,
+  KEY `tenant_id_index` (`tenant_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for booking info, with status being a flag (Ints)';
 
 --
 -- RELATIONS FOR TABLE `bookings`:
@@ -61,15 +65,19 @@ INSERT INTO `bookings` (`booking_id`, `status`, `check_in`, `property_id`, `tena
 -- Table structure for table `comments`
 --
 
-CREATE TABLE `comments` (
-  `comment_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `comments` (
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `property_id` int(11) NOT NULL,
   `comment_text` text COLLATE utf16_unicode_520_ci NOT NULL,
   `reply_text` text COLLATE utf16_unicode_520_ci,
   `commenter_id` int(11) NOT NULL,
-  `rating` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for Comments';
+  `rating` int(11) DEFAULT NULL,
+  PRIMARY KEY (`comment_id`),
+  UNIQUE KEY `property_id` (`property_id`,`commenter_id`),
+  KEY `property_id_index` (`property_id`) USING BTREE,
+  KEY `commenter_id_index` (`commenter_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for Comments';
 
 --
 -- RELATIONS FOR TABLE `comments`:
@@ -95,9 +103,10 @@ INSERT INTO `comments` (`comment_id`, `timestamp`, `property_id`, `comment_text`
 -- Table structure for table `district`
 --
 
-CREATE TABLE `district` (
+CREATE TABLE IF NOT EXISTS `district` (
   `District` varchar(40) COLLATE utf16_unicode_520_ci NOT NULL,
-  `POI` varchar(100) COLLATE utf16_unicode_520_ci NOT NULL
+  `POI` varchar(100) COLLATE utf16_unicode_520_ci NOT NULL,
+  PRIMARY KEY (`District`,`POI`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='Table storing distract information';
 
 --
@@ -123,16 +132,17 @@ INSERT INTO `district` (`District`, `POI`) VALUES
 -- Table structure for table `features`
 --
 
-CREATE TABLE `features` (
-  `property_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `features` (
+  `property_id` int(11) NOT NULL AUTO_INCREMENT,
   `internet` tinyint(1) NOT NULL DEFAULT '0',
   `gym` tinyint(1) NOT NULL DEFAULT '0',
   `pet_allowed` tinyint(1) NOT NULL DEFAULT '0',
   `tv` tinyint(1) NOT NULL DEFAULT '0',
   `washer` tinyint(1) NOT NULL DEFAULT '0',
   `parking` tinyint(1) NOT NULL DEFAULT '0',
-  `patio` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='Additional table to keep track a list of features';
+  `patio` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`property_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='Additional table to keep track a list of features';
 
 --
 -- RELATIONS FOR TABLE `features`:
@@ -159,11 +169,14 @@ INSERT INTO `features` (`property_id`, `internet`, `gym`, `pet_allowed`, `tv`, `
 -- Table structure for table `picture`
 --
 
-CREATE TABLE `picture` (
-  `pic_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `picture` (
+  `pic_id` int(11) NOT NULL AUTO_INCREMENT,
   `pic_path` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `property_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `property_id` int(11) NOT NULL,
+  PRIMARY KEY (`pic_id`) USING BTREE,
+  UNIQUE KEY `pic_path` (`pic_path`),
+  KEY `property_id_index` (`property_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `picture`:
@@ -187,14 +200,17 @@ INSERT INTO `picture` (`pic_id`, `pic_path`, `property_id`) VALUES
 -- Table structure for table `properties`
 --
 
-CREATE TABLE `properties` (
-  `property_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `properties` (
+  `property_id` int(11) NOT NULL AUTO_INCREMENT,
   `supplier_id` int(11) NOT NULL,
   `address` varchar(100) COLLATE utf16_unicode_520_ci NOT NULL,
   `district` varchar(20) COLLATE utf16_unicode_520_ci NOT NULL,
   `type` varchar(20) COLLATE utf16_unicode_520_ci NOT NULL,
-  `price` float NOT NULL COMMENT 'Price per month'
-) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for the property';
+  `price` float NOT NULL COMMENT 'Price per month',
+  PRIMARY KEY (`property_id`),
+  KEY `supplier_id_index` (`supplier_id`) USING BTREE,
+  KEY `district` (`district`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for the property';
 
 --
 -- RELATIONS FOR TABLE `properties`:
@@ -219,8 +235,8 @@ INSERT INTO `properties` (`property_id`, `supplier_id`, `address`, `district`, `
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `FName` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
   `LName` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
   `gender` char(1) COLLATE utf16_unicode_520_ci NOT NULL COMMENT 'F or M',
@@ -230,8 +246,9 @@ CREATE TABLE `user` (
   `grad_year` year(4) NOT NULL,
   `faculty` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
   `degree_type` varchar(5) COLLATE utf16_unicode_520_ci NOT NULL,
-  `is_admin` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci;
+  `is_admin` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci;
 
 --
 -- RELATIONS FOR TABLE `user`:
@@ -249,96 +266,6 @@ INSERT INTO `user` (`user_id`, `FName`, `LName`, `gender`, `email`, `password`, 
 (6, 'Jack', 'Qiao', 'M', 'jq@queensu.ca', 'pass', '6133333333', 2017, 'Computing', 'BAs', 1),
 (7, 'Yohanna', 'Gadelrab', 'M', 'y', '1234', '3333333333', 2017, 'ECE', 'B.Sc.', 1);
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `bookings`
---
-ALTER TABLE `bookings`
-  ADD PRIMARY KEY (`booking_id`),
-  ADD UNIQUE KEY `check_in` (`check_in`,`property_id`,`tenant_id`),
-  ADD KEY `property_id_index` (`property_id`) USING BTREE,
-  ADD KEY `tenant_id_index` (`tenant_id`) USING BTREE;
-
---
--- Indexes for table `comments`
---
-ALTER TABLE `comments`
-  ADD PRIMARY KEY (`comment_id`),
-  ADD UNIQUE KEY `property_id` (`property_id`,`commenter_id`),
-  ADD KEY `property_id_index` (`property_id`) USING BTREE,
-  ADD KEY `commenter_id_index` (`commenter_id`) USING BTREE;
-
---
--- Indexes for table `district`
---
-ALTER TABLE `district`
-  ADD PRIMARY KEY (`District`,`POI`);
-
---
--- Indexes for table `features`
---
-ALTER TABLE `features`
-  ADD PRIMARY KEY (`property_id`);
-
---
--- Indexes for table `picture`
---
-ALTER TABLE `picture`
-  ADD PRIMARY KEY (`pic_id`) USING BTREE,
-  ADD UNIQUE KEY `pic_path` (`pic_path`),
-  ADD KEY `property_id_index` (`property_id`) USING BTREE;
-
---
--- Indexes for table `properties`
---
-ALTER TABLE `properties`
-  ADD PRIMARY KEY (`property_id`),
-  ADD KEY `supplier_id_index` (`supplier_id`) USING BTREE,
-  ADD KEY `district` (`district`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `bookings`
---
-ALTER TABLE `bookings`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `comments`
---
-ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `features`
---
-ALTER TABLE `features`
-  MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `picture`
---
-ALTER TABLE `picture`
-  MODIFY `pic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `properties`
---
-ALTER TABLE `properties`
-  MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Constraints for dumped tables
 --
