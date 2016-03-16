@@ -2,16 +2,15 @@
 
 // Displays current user info, properties owned. If the user is an admin, display an admin button that will redirects the user to admin.php
 
-define("nl", "<br />");
+
+require_once 'header.php';
 
 //Create a user session or resume an existing one
 session_start();
 
 if(isset($_SESSION['user_id'])){
-   // include database connection
-    include_once 'config/connection.php';
 
-    // SELECT query
+        // SELECT query
         $query = "SELECT FName, LName, user_id, email, password FROM user WHERE user_id=?";
 
         // prepare query for execution
