@@ -10,11 +10,10 @@
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">QBnB</a>
+                        <a class="navbar-brand" href="search.php">QBnB</a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Search</a></li>
+                        <li class="active"><a href="search.php">Home</a></li>
                         <li><a href="profile.php">Profile</a></li>
                         <li><a href="#">Page 3</a></li>
                     </ul>
