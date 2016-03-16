@@ -52,4 +52,4 @@ if(isset($_SESSION['user_id'])){
 ?>
 
 
-Welcome  <?php echo $myrow['FName'] . ' ' . $myrow['LName']; ?>, <a href="index.php?logout=1">Log Out</a><br/>
+Welcome  <?php echo $myrow['FName'] . ' ' . $myrow['LName']; ?>
