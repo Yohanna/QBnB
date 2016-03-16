@@ -241,13 +241,13 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `FName`, `LName`, `email`, `password`, `phone_no`, `grad_year`, `faculty`, `degree_type`, `is_admin`) VALUES
-(1, 'Raquel', 'Smith', 'smith_raquel@queensu.ca', '\0r\0a\0q\0u\0e\0l\0s\0m\0i\0t\0h', '1234567890', 2003, 'Science', 'Bsc', 0),
-(2, 'Mai', 'Wu', 'mai_wu@queensu.ca', '\0m\0a\0i\0w\0u', '1234567899', 2004, 'Con-ed', 'Ba', 0),
-(3, 'Jeffery', 'Lin', 'jeffery_lin@queensu.ca', '\0j\0e\0f\0f\0e\0r\0y\0l\0i\0n', '1234567889', 2001, 'Computing', 'Bcs', 0),
-(5, 'Dylan', 'Liu', 'dl@queensu.ca', 'dylanpass', '6133333333', 2017, 'Computing', 'BAs', 1),
-(6, 'Jack', 'Qiao', 'jq@queensu.ca', 'jackpass', '6133333333', 2017, 'Computing', 'BAs', 1),
-(7, 'Yohanna', 'Gadelrab', 'yg@queensu.ca', '12345678', '3333333333', 2017, 'ECE', 'B.Sc.', 0);
+INSERT INTO `user` (`user_id`, `FName`, `LName`, `gender`, `email`, `password`, `phone_no`, `grad_year`, `faculty`, `degree_type`, `is_admin`) VALUES
+(1, 'Raquel', 'Smith', 'F', 'smith_raquel@queensu.ca', 'pass', '1234567890', 2003, 'Science', 'Bsc', 0),
+(2, 'Mai', 'Wu', 'F', 'mai_wu@queensu.ca', 'pass', '1234567899', 2004, 'Con-ed', 'Ba', 0),
+(3, 'Jeffery', 'Lin', 'M', 'jeffery_lin@queensu.ca', 'pass', '1234567889', 2001, 'Computing', 'Bcs', 0),
+(5, 'Dylan', 'Liu', 'M', 'dl@queensu.ca', 'pass', '6133333333', 2017, 'Computing', 'BAs', 1),
+(6, 'Jack', 'Qiao', 'M', 'jq@queensu.ca', 'pass', '6133333333', 2017, 'Computing', 'BAs', 1),
+(7, 'Yohanna', 'Gadelrab', 'M', 'y', '1234', '3333333333', 2017, 'ECE', 'B.Sc.', 1);
 
 --
 -- Indexes for dumped tables
