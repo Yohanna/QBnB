@@ -13,7 +13,7 @@ if(isset($_SESSION['user_id'])){
         echo "You're logged on" . nl;
 
         // SELECT query
-        $query = "SELECT FName, LName, user_id, email, password FROM user WHERE user_id=?";
+        $query = "SELECT FName, LName, is_admin FROM user WHERE user_id=?";
 
         // prepare query for execution
         $stmt = $con->prepare($query);
@@ -30,8 +30,10 @@ if(isset($_SESSION['user_id'])){
         // Row data
         $myrow = $result->fetch_assoc();
 
-        if ( $myrow['is_admin'] = 1){
+        if ( $myrow['is_admin'] == 1){
             echo "You're an admin" . nl;
+
+            echo '<a href="admin.php">Click Here to go to admin.php</a>' . nl;
         }
         else{
             echo "You're NOT an admin" . nl;
