@@ -12,7 +12,6 @@ session_start();
 <!DOCTYPE HTML>
 <html>
     <head>
-
     </head>
 
     <body>
@@ -56,7 +55,7 @@ if(isset($_SESSION['user_id'])){
 if(isset($_POST['loginBtn'])){
 
 
-    // SELECT query
+        // SELECT query
         $query = "SELECT user_id, email, password FROM user WHERE email=? AND password=?";
 
         // prepare query for execution
