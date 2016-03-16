@@ -4,6 +4,7 @@
 
 
 require_once 'header.php';
+require_once 'navbar.php';
 
 //Create a user session or resume an existing one
 session_start();
