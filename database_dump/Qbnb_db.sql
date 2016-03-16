@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2016 at 09:19 PM
+-- Generation Time: Mar 16, 2016 at 04:54 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -223,8 +223,9 @@ CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `FName` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
   `LName` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
-  `email` varchar(32) COLLATE utf16_unicode_520_ci NOT NULL,
-  `password` varchar(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `gender` char(1) COLLATE utf16_unicode_520_ci NOT NULL COMMENT 'F or M',
+  `email` varchar(32) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(32) CHARACTER SET utf8 NOT NULL,
   `phone_no` char(10) COLLATE utf16_unicode_520_ci NOT NULL,
   `grad_year` year(4) NOT NULL,
   `faculty` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
