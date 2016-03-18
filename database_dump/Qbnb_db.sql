@@ -129,6 +129,32 @@ INSERT INTO `districts` (`District`, `POI`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `faculties`
+--
+
+CREATE TABLE IF NOT EXISTS `faculties` (
+  `faculty_id` int(11) NOT NULL AUTO_INCREMENT,
+  `faculty` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`faculty_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- RELATIONS FOR TABLE `faculties`:
+--
+
+--
+-- Dumping data for table `faculties`
+--
+
+INSERT INTO `faculties` (`faculty_id`, `faculty`) VALUES
+(1, 'Faculty of Arts and Science'),
+(2, 'Faculty of Education'),
+(3, 'Faculty of Engineering and Applied Science'),
+(4, 'Smith School of Business');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `features`
 --
 
@@ -244,27 +270,31 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(32) CHARACTER SET utf8 NOT NULL,
   `phone_no` char(10) COLLATE utf16_unicode_520_ci NOT NULL,
   `grad_year` year(4) NOT NULL,
-  `faculty` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
-  `degree_type` varchar(5) COLLATE utf16_unicode_520_ci NOT NULL,
+  `faculty_id` int(10) NOT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci;
+  `degree_type` varchar(5) COLLATE utf16_unicode_520_ci NOT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `faculty_id_index` (`faculty_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci;
 
 --
--- RELATIONS FOR TABLE `user`:
+-- RELATIONS FOR TABLE `users`:
+--   `faculty_id`
+--       `faculties` -> `faculty_id`
 --
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `user` (`user_id`, `FName`, `LName`, `gender`, `email`, `password`, `phone_no`, `grad_year`, `faculty`, `degree_type`, `is_admin`) VALUES
-(1, 'Raquel', 'Smith', 'F', 'smith_raquel@queensu.ca', 'pass', '1234567890', 2003, 'Science', 'Bsc', 0),
-(2, 'Mai', 'Wu', 'F', 'mai_wu@queensu.ca', 'pass', '1234567899', 2004, 'Con-ed', 'Ba', 0),
-(3, 'Jeffery', 'Lin', 'M', 'jeffery_lin@queensu.ca', 'pass', '1234567889', 2001, 'Computing', 'Bcs', 0),
-(5, 'Dylan', 'Liu', 'M', 'dl@queensu.ca', 'pass', '6133333333', 2017, 'Computing', 'BAs', 1),
-(6, 'Jack', 'Qiao', 'M', 'jq@queensu.ca', 'pass', '6133333333', 2017, 'Computing', 'BAs', 1),
-(7, 'Yohanna', 'Gadelrab', 'M', 'y', '1234', '3333333333', 2017, 'ECE', 'B.Sc.', 1);
+INSERT INTO `users` (`user_id`, `FName`, `LName`, `gender`, `email`, `password`, `phone_no`, `grad_year`, `faculty_id`, `is_admin`, `degree_type`) VALUES
+(1, 'Raquel', 'Smith', 'F', 'smith_raquel@queensu.ca', 'pass', '1234567890', 2003, 2, 0, 'Bsc'),
+(2, 'Mai', 'Wu', 'F', 'mai_wu@queensu.ca', 'pass', '1234567899', 2004, 3, 0, 'Ba'),
+(3, 'Jeffery', 'Lin', 'M', 'jeffery_lin@queensu.ca', 'pass', '1234567889', 2001, 2, 0, 'Bcs'),
+(5, 'Dylan', 'Liu', 'M', 'dl@queensu.ca', 'pass', '6133333333', 2017, 1, 0, 'BAs'),
+(6, 'Jack', 'Qiao', 'M', 'jq@queensu.ca', 'pass', '6133333333', 2017, 1, 0, 'BAs'),
+(7, 'Yohanna', 'Gadelrab', 'M', 'y', '1234', '3333333333', 2017, 3, 1, 'B.Sc.'),
+(8, 'John', 'Doe', 'M', 'J', '1234', '3433333333', 2017, 1, 0, 'BA');
 
 --
 -- Constraints for dumped tables
@@ -308,6 +338,11 @@ ALTER TABLE `pictures`
 ALTER TABLE `properties`
   ADD CONSTRAINT `supplier_id_constraint` FOREIGN KEY (`supplier_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_faculty_id_constraint` FOREIGN KEY (`faculty_id`) REFERENCES `faculties` (`faculty_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
