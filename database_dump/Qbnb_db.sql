@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2016 at 05:00 AM
+-- Generation Time: Mar 18, 2016 at 09:46 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `bookings` (
 --   `property_id`
 --       `properties` -> `property_id`
 --   `tenant_id`
---       `user` -> `user_id`
+--       `users` -> `user_id`
 --
 
 --
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
 --
 -- RELATIONS FOR TABLE `comments`:
 --   `commenter_id`
---       `user` -> `user_id`
+--       `users` -> `user_id`
 --   `property_id`
 --       `properties` -> `property_id`
 --
@@ -100,26 +100,26 @@ INSERT INTO `comments` (`comment_id`, `timestamp`, `property_id`, `comment_text`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `district`
+-- Table structure for table `districts`
 --
 
-CREATE TABLE IF NOT EXISTS `district` (
+CREATE TABLE IF NOT EXISTS `districts` (
   `District` varchar(40) COLLATE utf16_unicode_520_ci NOT NULL,
   `POI` varchar(100) COLLATE utf16_unicode_520_ci NOT NULL,
   PRIMARY KEY (`District`,`POI`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='Table storing distract information';
 
 --
--- RELATIONS FOR TABLE `district`:
+-- RELATIONS FOR TABLE `districts`:
 --   `District`
 --       `properties` -> `district`
 --
 
 --
--- Dumping data for table `district`
+-- Dumping data for table `districts`
 --
 
-INSERT INTO `district` (`District`, `POI`) VALUES
+INSERT INTO `districts` (`District`, `POI`) VALUES
 ('Kanata', 'Kanata Lakes'),
 ('Nepean', 'Canadian War Museum'),
 ('Nepean', 'Parliament Hill'),
@@ -166,10 +166,10 @@ INSERT INTO `features` (`property_id`, `internet`, `gym`, `pet_allowed`, `tv`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `picture`
+-- Table structure for table `pictures`
 --
 
-CREATE TABLE IF NOT EXISTS `picture` (
+CREATE TABLE IF NOT EXISTS `pictures` (
   `pic_id` int(11) NOT NULL AUTO_INCREMENT,
   `pic_path` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `property_id` int(11) NOT NULL,
@@ -179,16 +179,16 @@ CREATE TABLE IF NOT EXISTS `picture` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELATIONS FOR TABLE `picture`:
+-- RELATIONS FOR TABLE `pictures`:
 --   `property_id`
 --       `properties` -> `property_id`
 --
 
 --
--- Dumping data for table `picture`
+-- Dumping data for table `pictures`
 --
 
-INSERT INTO `picture` (`pic_id`, `pic_path`, `property_id`) VALUES
+INSERT INTO `pictures` (`pic_id`, `pic_path`, `property_id`) VALUES
 (1, '/home/user/joe/pics/1.jpg', 2),
 (2, '/home/user/joe/pics/2.jpg', 3),
 (3, '/home/user/joe/pics/3.jpg', 3),
@@ -215,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `properties` (
 --
 -- RELATIONS FOR TABLE `properties`:
 --   `supplier_id`
---       `user` -> `user_id`
+--       `users` -> `user_id`
 --
 
 --
@@ -232,10 +232,10 @@ INSERT INTO `properties` (`property_id`, `supplier_id`, `address`, `district`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `FName` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
   `LName` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
@@ -255,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `user` (`user_id`, `FName`, `LName`, `gender`, `email`, `password`, `phone_no`, `grad_year`, `faculty`, `degree_type`, `is_admin`) VALUES
@@ -275,19 +275,19 @@ INSERT INTO `user` (`user_id`, `FName`, `LName`, `gender`, `email`, `password`, 
 --
 ALTER TABLE `bookings`
   ADD CONSTRAINT `bookings_property_id_constraint` FOREIGN KEY (`property_id`) REFERENCES `properties` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `bookings_tenant_id_constraint` FOREIGN KEY (`tenant_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `bookings_tenant_id_constraint` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_commenter_id_constraint` FOREIGN KEY (`commenter_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comments_commenter_id_constraint` FOREIGN KEY (`commenter_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comments_property_id_constraints` FOREIGN KEY (`property_id`) REFERENCES `properties` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `district`
+-- Constraints for table `districts`
 --
-ALTER TABLE `district`
+ALTER TABLE `districts`
   ADD CONSTRAINT `district_constraint` FOREIGN KEY (`District`) REFERENCES `properties` (`district`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -297,16 +297,17 @@ ALTER TABLE `features`
   ADD CONSTRAINT `features_property_id_constraint` FOREIGN KEY (`property_id`) REFERENCES `properties` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `picture`
+-- Constraints for table `pictures`
 --
-ALTER TABLE `picture`
+ALTER TABLE `pictures`
   ADD CONSTRAINT `property_id_constraint` FOREIGN KEY (`property_id`) REFERENCES `properties` (`property_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `properties`
 --
 ALTER TABLE `properties`
-  ADD CONSTRAINT `supplier_id_constraint` FOREIGN KEY (`supplier_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `supplier_id_constraint` FOREIGN KEY (`supplier_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
