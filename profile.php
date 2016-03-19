@@ -34,6 +34,8 @@ if(isset($_SESSION['user_id'])){
         if ( $myrow['is_admin'] == 1){
             echo "You're an admin" . nl;
 
+            $_SESSION['admin'] = true;
+
             echo '<a href="admin.php">Click Here to go to admin.php</a>' . nl;
         }
         else{
