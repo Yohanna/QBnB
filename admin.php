@@ -65,7 +65,7 @@ else { // No logged in user
 
     <?php
     // Select all properties
-    $query = "SELECT address, district, type, price, FName, LName FROM properties, users where supplier_id = user_id";
+    $query = "SELECT property_id, address, district, type, price, FName, LName FROM properties, users where supplier_id = user_id";
 
     // prepare query for execution
     if($stmt = $con->prepare($query)){
@@ -109,14 +109,14 @@ else { // No logged in user
           <td><?=$row['price']?></td>
           <td><?=$row['FName'] . ' ' . $row['LName']?></td>
           <td>
-          <button type="button" class="btn btn-info">View</button>
-          <button type="button" class="btn btn-warning">Edit</button>
-          <button type="button" class="btn btn-danger">Delete</button>
+          <a type="button" class="btn btn-info" href="view_property.php?property_id=<?=$row['property_id']?>">View</a>
+          <a type="button" class="btn btn-warning" href="edit_property.php?property_id=<?=$row['property_id']?>">Edit</a>
+          <a type="button" class="btn btn-danger" href="delete_property.php?property_id=<?=$row['property_id']?>">Delete</a>
           </td>
         </tr>
 
           <?php
-          endwhile; //for fetching $row
+          endwhile; // $row = $result->fetch_assoc()
         } // end else for '$num == 0'
       } // end if $stmt prepare
       ?>
