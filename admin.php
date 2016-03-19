@@ -5,61 +5,67 @@
 require_once 'header.php';
 require_once 'navbar.php';
 
-//Create a user session or resume an existing one
+// Resume a session if there's one
 session_start();
 
-// Check again if the logged in user is an admin
+// Check if there's a logged in user
+if( isset($_SESSION['isloggedIn']) && $_SESSION['isloggedIn'] == true) {
 
-$query = "SELECT is_admin FROM user WHERE user_id=?";
+  // Check if the logged in user is an admin
+  $query = "SELECT is_admin FROM users WHERE user_id=?";
 
-// prepare query for execution
-if($stmt = $con->prepare($query)){
+  // prepare query for execution
+  if($stmt = $con->prepare($query)){
 
-    // bind the parameters.
-    $stmt->bind_Param("s", $_SESSION['user_id']);
+      // bind the parameters.
+      $stmt->bind_Param("s", $_SESSION['user_id']);
 
-    // Execute the query
-    $stmt->execute();
+      // Execute the query
+      $stmt->execute();
 
-    // Get Results
-    $result = $stmt->get_result();
+      // Get Results
+      $result = $stmt->get_result();
 
-    // Get the number of rows returned
-    $num = $result->num_rows;;
+      // Get the number of rows returned
+      $num = $result->num_rows;;
 
-    if($num>0){
+      if($num>0){
 
-        //If the user_id matches a user in our db, get the is_admin value
-        $row = $result->fetch_assoc();
+          //If the user_id matches a user in our db, get the is_admin value
+          $row = $result->fetch_assoc();
 
-        // If the current logged in user is NOT an admin, redirect to profile.php
-        if($row['is_admin'] == 0){
-            //Redirect the browser to the profile editing page and kill this page.
-            header("Location: profile.php");
-            die();
-        }
-    }
-}
-else {
+          // If the current logged in user is NOT an admin, redirect to profile.php
+          if($row['is_admin'] == 0){
+              header("Location: profile.php");
+              die();
+          }
+      }
+
+  }
+  else {
     echo "Failed to prepare the SQL";
+    // If we can't check if the
+    header("Location: profile.php");
+    die();
+  }
+} // session_status() == PHP_SESSION_ACTIVE
+else { // No logged in user
+  header("Location: index.php");
+  die();
 }
 
 // At this point we should have made sure the current logged in user is an admin
-
-// Display all properties in the db
-
-echo "<h1>Hello Admin</h1>" . nl;
-
-
 ?>
 
 
 <html>
 <body>
 
+    <h1 class="text-center">Hello Admin</h1>
+
     <?php
     // Select all properties
-    $query = "SELECT address, district, type, price, FName, LName FROM properties, user where supplier_id = user_id";
+    $query = "SELECT address, district, type, price, FName, LName FROM properties, users where supplier_id = user_id";
 
     // prepare query for execution
     if($stmt = $con->prepare($query)){
