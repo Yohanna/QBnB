@@ -40,7 +40,9 @@ session_start();
 //check if the user clicked the logout link and set the logout GET parameter
 if(isset($_GET['logout']) && $_GET['logout'] == 1){
     //Destroy the user's session.
-    $_SESSION['user_id']=null;
+    unset($_SESSION['user_id'], $_SESSION['admin']);
+
+    session_unset();
     session_destroy();
 }
 
