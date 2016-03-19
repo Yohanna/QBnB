@@ -60,7 +60,7 @@ if(isset($_POST['loginBtn'])){
 
 
         // SELECT query
-        $query = "SELECT user_id, email, password FROM user WHERE email=? AND password=?";
+        $query = "SELECT user_id, email, password FROM users WHERE email=? AND password=?";
 
         // prepare query for execution
         if($stmt = $con->prepare($query)){
@@ -84,6 +84,9 @@ if(isset($_POST['loginBtn'])){
 
                 //Create a session variable that holds the user's user_id
                 $_SESSION['user_id'] = $myrow['user_id'];
+                $_SESSION['isloggedIn'] = true;
+
+
                 //Redirect the browser to the profile editing page and kill this page.
                 header("Location: profile.php");
                 die();
