@@ -7,6 +7,7 @@ require_once 'navbar.php';
 
 //Create a user session or resume an existing one
 session_start();
+
 ?>
 
 
@@ -20,7 +21,7 @@ session_start();
     <form action="index.php" method="post">
     <div class = "container">
         <!-- <div class = "wrapper"> -->
-            <h3 class = "form-signin-heading"> Welcome to QBnB, Please Sign In </h3>
+            <h3 class = "form-signin-heading text-center"> Welcome to QBnB, Please Sign In or Register</h3>
             <hr class = "colorgraph"> <br>
 
             <input type="text"  class="form-control" name = "email" placeholder = "Email" required="" autofocus=""/>
@@ -37,7 +38,7 @@ session_start();
 <?php
 
 //check if the user clicked the logout link and set the logout GET parameter
-if(isset($_GET['logout'])){
+if(isset($_GET['logout']) && $_GET['logout'] == 1){
     //Destroy the user's session.
     $_SESSION['user_id']=null;
     session_destroy();
