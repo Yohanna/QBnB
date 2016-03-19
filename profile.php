@@ -11,10 +11,10 @@ session_start();
 
 if(isset($_SESSION['user_id'])){
 
-        echo "You're logged on" . nl;
+        echo "You've logged in" . nl;
 
         // SELECT query
-        $query = "SELECT FName, LName, is_admin FROM user WHERE user_id=?";
+        $query = "SELECT FName, LName, is_admin FROM users WHERE user_id=?";
 
         // prepare query for execution
         $stmt = $con->prepare($query);
@@ -41,9 +41,9 @@ if(isset($_SESSION['user_id'])){
         }
 
 
-} else {
+}
+else {
     //User is not logged in. Redirect the browser to the login index.php page and kill this page.
-    echo "You're not logged in!" . nl;
     header("Location: index.php");
     die();
 }
