@@ -21,6 +21,7 @@ require_once 'header.php';
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Add a property</a></li>
+								<li><a href="user_properties.php">Properties Owned</a></li>
                             </ul>
                         </li>
                     </ul>

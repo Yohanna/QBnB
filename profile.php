@@ -54,4 +54,5 @@ else {
 ?>
 
 
-Welcome  <?php echo $myrow['FName'] . ' ' . $myrow['LName']; ?>
+Welcome  <?php echo $myrow['FName'] . ' ' . $myrow['LName'] . nl; ?>
+<a type="button" class="btn btn-primary" href="user_properties.php">Properties Owned</a>
