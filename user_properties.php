@@ -15,12 +15,15 @@ session_start();
 <body>
     <?php
 	if( isset($_SESSION['isloggedIn']) && $_SESSION['isloggedIn'] == true) {
-    // Select all properties
-    $query = "SELECT address, district, type, price FROM properties where supplier_id='" . $_SESSION['user_id'] . "'";
-
+    // Select all properties owned by the user
+    $query = "SELECT property_id, address, district, type, price FROM properties where supplier_id=?";
+	
     // prepare query for execution
     if($stmt = $con->prepare($query)){
-
+		
+		// Bind the parameters
+		$stmt->bind_Param("s", $_SESSION['user_id']);
+		
         // Execute the query
         $stmt->execute();
 
@@ -40,6 +43,7 @@ session_start();
         <table class="table table-bordered table-striped" >
         <thead>
         <tr>
+		  <th>Property ID</th>
           <th>Address</th>
           <th>District</th>
           <th>Type</th>
@@ -53,6 +57,7 @@ session_start();
           while($row = $result->fetch_assoc()):
         ?>
         <tr>
+		  <td><?=$row['property_id']?></td>
           <td><?=$row['address'] ?></td>
           <td><?=$row['district']?></td>
           <td><?=$row['type']?></td>
