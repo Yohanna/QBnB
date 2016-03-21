@@ -74,6 +74,10 @@ session_start();
         } // end else for '$num == 0'
       } // end if $stmt prepare
 	}
+	else { // No logged in user
+		header("Location: index.php");
+		die();
+	}
       ?>
         </tbody>
         </table>
