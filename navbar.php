@@ -15,7 +15,7 @@ require_once 'header.php';
                         <a class="navbar-brand" href="search.php">QBnB</a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="search.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                        <li class="active"><a href="search.php"><span class="glyphicon glyphicon-search"></span> Search</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">My Properties
                             <span class="caret"></span></a>
