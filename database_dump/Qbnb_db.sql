@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2016 at 09:46 AM
+-- Generation Time: Mar 22, 2016 at 06:15 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -67,12 +67,11 @@ INSERT INTO `bookings` (`booking_id`, `status`, `check_in`, `property_id`, `tena
 
 CREATE TABLE IF NOT EXISTS `comments` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `commenter_id` int(11) NOT NULL,
   `property_id` int(11) NOT NULL,
   `comment_text` text COLLATE utf16_unicode_520_ci NOT NULL,
-  `reply_text` text COLLATE utf16_unicode_520_ci,
-  `commenter_id` int(11) NOT NULL,
   `rating` int(11) DEFAULT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_id`),
   UNIQUE KEY `property_id` (`property_id`,`commenter_id`),
   KEY `property_id_index` (`property_id`) USING BTREE,
@@ -91,11 +90,11 @@ CREATE TABLE IF NOT EXISTS `comments` (
 -- Dumping data for table `comments`
 --
 
-INSERT INTO `comments` (`comment_id`, `timestamp`, `property_id`, `comment_text`, `reply_text`, `commenter_id`, `rating`) VALUES
-(1, '2016-03-07 23:20:23', 1, 'Great place and location.', NULL, 1, 3),
-(2, '2016-03-07 23:20:23', 2, 'Great location. Unfortunately place was mostly unfurnished.', NULL, 2, 5),
-(3, '2016-03-07 23:20:23', 3, 'It was clean.', 'Thanks for the comment!', 3, 4),
-(4, '2016-03-10 19:43:18', 5, 'Property was clean like the pictures. Host was nice. Would definitely stay here again! ', NULL, 7, 5);
+INSERT INTO `comments` (`comment_id`, `commenter_id`, `property_id`, `comment_text`, `rating`, `timestamp`) VALUES
+(1, 1, 1, 'Great place and location.', 3, '2016-03-07 23:20:23'),
+(2, 2, 2, 'Great location. Unfortunately place was mostly unfurnished.', 5, '2016-03-07 23:20:23'),
+(3, 3, 3, 'It was clean.', 4, '2016-03-07 23:20:23'),
+(4, 7, 5, 'Property was clean like the pictures. Host was nice. Would definitely stay here again! ', 5, '2016-03-10 19:43:18');
 
 -- --------------------------------------------------------
 
