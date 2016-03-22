@@ -20,7 +20,7 @@ require_once 'header.php';
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">My Properties
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Add a property</a></li>
+                                <li><a href="add_property.php">Add a property</a></li>
 								<li><a href="user_properties.php">Properties Owned</a></li>
                             </ul>
                         </li>
