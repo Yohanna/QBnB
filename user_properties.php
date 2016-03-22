@@ -17,13 +17,13 @@ session_start();
 	if( isset($_SESSION['isloggedIn']) && $_SESSION['isloggedIn'] == true) {
     // Select all properties owned by the user
     $query = "SELECT property_id, address, district, type, price FROM properties where supplier_id=?";
-	
+
     // prepare query for execution
     if($stmt = $con->prepare($query)){
-		
+
 		// Bind the parameters
 		$stmt->bind_Param("s", $_SESSION['user_id']);
-		
+
         // Execute the query
         $stmt->execute();
 
@@ -34,7 +34,7 @@ session_start();
         $num = $result->num_rows;;
 
         if($num == 0)
-          echo "You do not own any properties";
+          echo '<h1 class="text-center">You do not own any properties!</h1>';
         else {
         ?>
 
