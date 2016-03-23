@@ -18,13 +18,28 @@ require_once 'navbar.php';
 
     <form action="index.php" method="post">
     <div class = "container">
-            <h2 class = "form-signin-heading text-center" style="color:white;"> Welcome to QBnB, Please Sign In or Register</h2>
+            <h2 class = "form-signin-heading text-center"> Welcome to QBnB, Please Log In or Register</h2>
             <hr class = "colorgraph"> <br>
 
-            <input type="text"  class="form-control" name = "email" placeholder = "Email" required="" autofocus=""/>
+            <!-- Login Form Email Address -->
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </span>
+                <input type="text"  class="form-control" name="email" placeholder="Email" required="" autofocus=""/>
+            </div>
+
             <br>
+
+            <!-- Login Form Password -->
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-lock"></span>
+                </span>
             <input type="password" class="form-control" name="password" placeholder = "Password" required=""/>
-            <hr>
+            </div>
+
+            <br>
             <input type="submit" class="btn btn-lg btn-primary btn-block" name="loginBtn" value="Log In" />
     </div>
     </form>
