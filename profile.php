@@ -26,9 +26,9 @@ if(isset($_SESSION['user_id'])){
         $result = $stmt->get_result();
 
         // Row data
-        $myrow = $result->fetch_assoc();
+        $row = $result->fetch_assoc();
 
-        if ( $myrow['is_admin'] == 1){
+        if ( $row['is_admin'] == 1){
             echo "You're an admin" . nl;
 
             $_SESSION['admin'] = true;
@@ -51,5 +51,5 @@ else {
 ?>
 
 
-Welcome  <?php echo $myrow['FName'] . ' ' . $myrow['LName'] . nl; ?>
+Welcome  <?php echo $row['FName'] . ' ' . $row['LName'] . nl; ?>
 <a type="button" class="btn btn-primary" href="user_properties.php">Properties Owned</a>
