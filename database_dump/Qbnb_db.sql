@@ -214,10 +214,10 @@ CREATE TABLE IF NOT EXISTS `pictures` (
 --
 
 INSERT INTO `pictures` (`pic_id`, `pic_path`, `property_id`) VALUES
-(1, '/home/user/joe/pics/1.jpg', 2),
-(2, '/home/user/joe/pics/2.jpg', 3),
-(3, '/home/user/joe/pics/3.jpg', 3),
-(5, '/home/yohanna/pic.jpg', 5);
+(1, 'property_pics/1_2.jpg', 2),
+(2, 'property_pics/2_3.jpg', 3),
+(3, 'property_pics/3_3.jpg', 3),
+(5, 'property_pics/5_5.jpg', 5);
 
 -- --------------------------------------------------------
 
