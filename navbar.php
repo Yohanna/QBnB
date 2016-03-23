@@ -29,6 +29,7 @@ if( userLoggedIn() ){
                         <li class="active"><a href="search.php"><span class="glyphicon glyphicon-search"></span> Search</a></li>
                         <li><a href="user_properties.php"><span class="glyphicon glyphicon-home"></span> My Properties</a></li>
                         <li><a href="add_property.php"><span class="glyphicon glyphicon-plus"></span> Add a property</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-th-list"></span> My Bookings</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                     <?php
@@ -44,8 +45,10 @@ if( userLoggedIn() ){
                     if(isset($_SESSION['is_admin']) && $_SESSION['is_admin']){
                         echo '<li><a href="admin.php"><span class="glyphicon glyphicon-eye-open"></span> Admin</a></li>';
                     }
+                    if(userLoggedIn())
+                        echo '<li><a href="index.php?logout=1"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>';
                     ?>
-                    <li><a href="index.php?logout=1"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+                    <li><a href="about.php"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
                     </ul>
                 </div>
             </nav>
