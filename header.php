@@ -20,6 +20,18 @@ function varDump(...$Variables){
     echo '</pre>';
 }
 
+/*
+* Return TRUE or FALSE if the there's a logged in user.
+*/
+function userLoggedIn(){
+    if(isset($_SESSION['isloggedIn']) && $_SESSION['isloggedIn'])
+        return true;
+
+    return false;
+}
+
+
+
  // <!-- Latest compiled and minified CSS -->
 echo '<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">';
 

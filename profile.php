@@ -6,7 +6,7 @@
 require_once 'header.php';
 require_once 'navbar.php';
 
-if(isset($_SESSION['user_id'])){
+if(userLoggedIn()){
 
         echo "You've logged in" . nl;
 
@@ -30,8 +30,6 @@ if(isset($_SESSION['user_id'])){
 
         if ( $row['is_admin'] == 1){
             echo "You're an admin" . nl;
-
-            $_SESSION['admin'] = true;
 
             echo '<a href="admin.php">Click Here to go to admin.php</a>' . nl;
         }

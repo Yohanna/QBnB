@@ -6,7 +6,7 @@ require_once 'header.php';
 require_once 'navbar.php';
 
 // Check if there's a logged in user
-if( isset($_SESSION['isloggedIn']) && $_SESSION['isloggedIn'] == true) {
+if( userLoggedIn() ) {
 
   // Check if the logged in user is an admin
   $query = "SELECT is_admin FROM users WHERE user_id=?";

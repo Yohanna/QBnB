@@ -51,7 +51,7 @@ if(isset($_GET['logout']) && $_GET['logout'] == 1){
 
 
 //check if the user is already logged in and has an active session
-if(isset($_SESSION['user_id'])){
+if(userLoggedIn()){
     //Redirect the browser to the profile editing page and kill this page.
     header("Location: profile.php");
     die();
