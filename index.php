@@ -3,6 +3,16 @@
 // Provide Log In/Out functionality.
 
 require_once 'header.php';
+
+//check if the user clicked the logout link and set the logout GET parameter
+if(isset($_GET['logout']) && $_GET['logout'] == 1){
+    //Destroy the user's session.
+    unset($_SESSION['user_id'], $_SESSION['is_admin'], $_SESSION['isloggedIn']);
+
+    session_unset();
+    session_destroy();
+}
+
 require_once 'navbar.php';
 
 ?>
@@ -55,14 +65,6 @@ require_once 'navbar.php';
 
 <?php
 
-//check if the user clicked the logout link and set the logout GET parameter
-if(isset($_GET['logout']) && $_GET['logout'] == 1){
-    //Destroy the user's session.
-    unset($_SESSION['user_id'], $_SESSION['is_admin'], $_SESSION['isloggedIn']);
-
-    session_unset();
-    session_destroy();
-}
 
 
 //check if the user is already logged in and has an active session
