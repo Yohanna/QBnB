@@ -43,7 +43,7 @@ require_once 'navbar.php';
 //check if the user clicked the logout link and set the logout GET parameter
 if(isset($_GET['logout']) && $_GET['logout'] == 1){
     //Destroy the user's session.
-    unset($_SESSION['user_id'], $_SESSION['admin']);
+    unset($_SESSION['user_id'], $_SESSION['is_admin'], $_SESSION['isloggedIn']);
 
     session_unset();
     session_destroy();
@@ -63,7 +63,7 @@ if(isset($_POST['loginBtn'])){
 
 
         // SELECT query
-        $query = "SELECT user_id, email, password FROM users WHERE email=? AND password=?";
+        $query = "SELECT user_id, email, password, is_admin FROM users WHERE email=? AND password=?";
 
         // prepare query for execution
         if($stmt = $con->prepare($query)){
@@ -83,11 +83,12 @@ if(isset($_POST['loginBtn'])){
             if($num>0){
                 //If the email/password matches a user in our database
                 //Read the user details
-                $myrow = $result->fetch_assoc();
+                $row = $result->fetch_assoc();
 
                 //Create a session variable that holds the user's user_id
-                $_SESSION['user_id'] = $myrow['user_id'];
+                $_SESSION['user_id'] = $row['user_id'];
                 $_SESSION['isloggedIn'] = true;
+                $row['is_admin'] ? $_SESSION['is_admin'] = true: $_SESSION['is_admin'] = false;
 
 
                 //Redirect the browser to the profile editing page and kill this page.
