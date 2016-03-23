@@ -27,14 +27,8 @@ if( userLoggedIn() ){
                     </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="search.php"><span class="glyphicon glyphicon-search"></span> Search</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">My Properties
-                            <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="add_property.php">Add a property</a></li>
-								<li><a href="user_properties.php">Properties Owned</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="user_properties.php"><span class="glyphicon glyphicon-home"></span> My Properties</a></li>
+                        <li><a href="add_property.php"><span class="glyphicon glyphicon-plus"></span> Add a property</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                     <?php
@@ -47,7 +41,7 @@ if( userLoggedIn() ){
                     <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                     <?php
                     // Display Admin link in navbar if current logged in user is an admin
-                    if( isset( $_SESSION['admin']) && $_SESSION['admin'] == true ){
+                    if(isset($_SESSION['is_admin']) && $_SESSION['is_admin']){
                         echo '<li><a href="admin.php"><span class="glyphicon glyphicon-eye-open"></span> Admin</a></li>';
                     }
                     ?>
