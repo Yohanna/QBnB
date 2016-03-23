@@ -11,14 +11,6 @@ require_once 'navbar.php';
 <!DOCTYPE HTML>
 <html>
     <head>
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-
-        <!-- Latest compiled JavaScript -->
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     </head>
 
     <body>
@@ -80,7 +72,7 @@ if(isset($_POST['loginBtn'])){
             $result = $stmt->get_result();
 
             // Get the number of rows returned
-            $num = $result->num_rows;;
+            $num = $result->num_rows;
 
             if($num>0){
                 //If the email/password matches a user in our database
@@ -98,7 +90,7 @@ if(isset($_POST['loginBtn'])){
             } else {
                 //If the email/password doesn't match a user in our database
                 // Display an error message and the login form
-                echo '<p class="bg-danger">Failed to login</p>' . nl;
+                echo '<br><p class="bg-danger text-center">Failed to login. Wrong Email or Password</p>' . nl;
             }
         }
         else {
