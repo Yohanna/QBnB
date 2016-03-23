@@ -26,6 +26,13 @@ require_once 'header.php';
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+                    <?php
+                    // Display who's signed in
+                    if(userLoggedIn())
+                        echo '<li><p class="navbar-text">Signed in as '.$row['FName'] . ' ' . $row['LName'].'</p></li>';
+                    ?>
+
+
                     <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                     <?php
                     // Display Admin link in navbar if current logged in user is an admin
