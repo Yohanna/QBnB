@@ -5,6 +5,11 @@ define("nl", "<br />");
 // include database connection
 require_once 'config/connection.php';
 
+if(!isset($_SESSION))
+{
+    session_start();
+}
+
 // Dump list of variables passed in
 function varDump(...$Variables){
 

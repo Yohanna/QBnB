@@ -5,9 +5,6 @@
 require_once 'header.php';
 require_once 'navbar.php';
 
-// Resume a session if there's one
-session_start();
-
 // Check if there's a logged in user
 if( isset($_SESSION['isloggedIn']) && $_SESSION['isloggedIn'] == true) {
 

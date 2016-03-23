@@ -5,9 +5,6 @@
 require_once 'header.php';
 require_once 'navbar.php';
 
-// Resume a session if there's one
-session_start();
-
 ?>
 
 
