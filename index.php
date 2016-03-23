@@ -11,23 +11,29 @@ require_once 'navbar.php';
 <!DOCTYPE HTML>
 <html>
     <head>
+    <link rel="stylesheet" href="css/qbnb.css">';
     </head>
 
     <body>
 
     <form action="index.php" method="post">
     <div class = "container">
-        <!-- <div class = "wrapper"> -->
-            <h3 class = "form-signin-heading text-center"> Welcome to QBnB, Please Sign In or Register</h3>
+            <h2 class = "form-signin-heading text-center" style="color:white;"> Welcome to QBnB, Please Sign In or Register</h2>
             <hr class = "colorgraph"> <br>
 
             <input type="text"  class="form-control" name = "email" placeholder = "Email" required="" autofocus=""/>
+            <br>
             <input type="password" class="form-control" name="password" placeholder = "Password" required=""/>
-
+            <hr>
             <input type="submit" class="btn btn-lg btn-primary btn-block" name="loginBtn" value="Log In" />
-        <!-- </div> -->
     </div>
     </form>
+
+    <div class="container">
+        <hr class = "colorgraph">
+        <h3 class="text-center">You say what?! You're not a member!!!</h3> <br>
+        <a type="button" class="btn btn-lg btn-primary btn-block" href="signup.php">Hurry Sign Up!</a>
+    </div>
 
     </body>
 </html>
