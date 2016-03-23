@@ -2,6 +2,17 @@
 
 require_once 'header.php';
 
+if( userLoggedIn() ){
+    $query = "SELECT FName, LName FROM users WHERE user_id=?";
+
+    $stmt = $con->prepare($query);
+
+    $stmt->bind_Param("s", $_SESSION['user_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+}
+
 ?>
 
 <html>
