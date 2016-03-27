@@ -17,8 +17,7 @@ accommodations in their destination city. When a consumer finds an accommodation
 are interested in they can check the availability of the accommodation for their desired
 dates and then submit a request to the supplier to rent the accommodation for a particular
 booking period. If the supplier agrees to the request they submit a confirmation to QBnB
-that changes the availability of the accommodation, otherwise they reject the booking.
-        </h4>
+that changes the availability of the accommodation, otherwise they reject the booking.</h4>
     </body>
 
 
