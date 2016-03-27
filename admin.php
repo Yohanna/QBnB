@@ -61,7 +61,7 @@ else { // No logged in user
     <h1 class="text-center">Hello Admin</h1>
 
     <?php
-    // Select all properties
+    // Select all properties and Supplier FName and LName
     $query = "SELECT property_id, address, district, type, price, FName, LName FROM properties, users where supplier_id = user_id";
 
     // prepare query for execution
@@ -94,6 +94,7 @@ else { // No logged in user
           <th>Action</th>
         </tr>
         </thead>
+
         <tbody>
 
         <?php
@@ -118,6 +119,7 @@ else { // No logged in user
       } // end if $stmt prepare
       ?>
         </tbody>
+
         </table>
         </div>
 
