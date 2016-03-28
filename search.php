@@ -46,6 +46,7 @@ require_once 'navbar.php';
 
 		<div class="container">
 			<h1> Search Result </h1>
+
 			<?php
 				if ($result == FALSE) {
 					echo "<body> Sorry your search returns no result, 
@@ -61,6 +62,7 @@ require_once 'navbar.php';
 						<th> District </th>
 						<th> Type </th>
 						<th> Price </th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -75,14 +77,16 @@ require_once 'navbar.php';
 
 						$str = "SELECT FName, LName FROM users WHERE user_id = '$supp_id'";
 						$result2 = $con->query($str);
-						$usr = $result2->fetch_assoc();
+						$usr = $result2->fetch_assoc(); ?>
+						<?php 
 						echo "<tr>";
 						echo "<th> " .$usr['FName']." ".$usr['LName']." </th>";
 						echo "<th> '$address' </th>";
 						echo "<th> '$district' </th>";
 						echo "<th> '$type' </th>";
-						echo "<th> '$price' </th>";
-						echo "</tr>";
+						echo "<th> '$price' </th>"; ?>
+						<th><a href="result.php?prop_id = <?php echo '$prop_id';?> ">Browse</a></th>
+						<?php echo "</tr>";
 					}
 				}	
 			?>
