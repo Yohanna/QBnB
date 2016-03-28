@@ -23,7 +23,7 @@ if( userLoggedIn() ){
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand">QBnB</a>
+                        <a class="navbar-brand" href="index.php">QBnB</a>
                     </div>
 
                     <?php
@@ -33,7 +33,7 @@ if( userLoggedIn() ){
                         <li class="active"><a href="search.php"><span class="glyphicon glyphicon-search"></span> Search</a></li>
                         <li><a href="user_properties.php"><span class="glyphicon glyphicon-home"></span> My Properties</a></li>
                         <li><a href="add_property.php"><span class="glyphicon glyphicon-plus"></span> Add a property</a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-th-list"></span> My Bookings</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-time"></span> Booking History</a></li>
                         </ul>';
 
                         // Right Navbar section
