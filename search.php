@@ -14,28 +14,39 @@ require_once 'navbar.php';
 <?php
 	if (isset($_POST)) { 
 			$type = $_POST["type"];
-			echo "<h3> '$type' </h3>";
 			$price = $_POST["price"];
-			echo "<h3> '$price' </h3>";
-			$feature = $_POST["features"];
-			if(!(empty($feature))) 
+			if(!(empty($_POST["features"]))) 
   			{
-    			for($i=0; $i < count($feature); $i++)
-    			{
-    				echo ($feature[$i] . " ")	;
-    			}
+  				$feature = $_POST["features"];
+    		
   			} 
 
 			$district = $_POST["district"];
 			$poi = $_POST["poi"];
 
-			if ($type == "undecided" && $price == "undecided" && empty($feature))
-				$str = "SELECT * FROM properties, districts WHERE properties.district = '$district' AND properties.district = district.District AND district.POI = '$poi'";
-			
+			$str = "SELECT DISTINCT property_id, supplier_id, address, properties.district, type, price FROM properties, districts WHERE properties.district = districts.District";
+			if ($type != "Undecided")
+				$str . "AND properties.type = '$type'";
+			if ($price != "Undecided")
+				$str . "AND properties.price >= '$price' AND properties.price <= ('$price' + 100)";
+			if ($district != "Undecided")
+				$str . "AND properties.district = '$district'";
+			if ($poi != "Undecided")
+				$str . "AND districts.POI = '$poi'";
+			$str . ";";
+
 			$result = $con->query($str);
-		?>
+			?>
+
 		<div class="container">
 			<h1> Search Result </h1>
+			<?php
+				if ($result == FALSE) {
+					echo "<body> Sorry your search returns no result, 
+					please try to search again.</body>";
+				}
+				else { ?>
+
 			<table class="table table-hover"> 
 				<thead>
 					<tr>
@@ -47,11 +58,28 @@ require_once 'navbar.php';
 					</tr>
 				</thead>
 				<tbody>
-					<?php
-						if ($result->num_rows > 0) {
-							
-						}
-					?>
+				<?php
+					while ($row = $result->fetch_assoc()) {
+						$supp_id = $row['supplier_id'];
+						$prop_id = $row['property_id'];
+						$address = $row['address'];
+						$district = $row['district'];
+						$type = $row['type'];
+						$price = $row['price'];
+
+						$str = "SELECT FName, LName FROM users WHERE user_id = '$supp_id'";
+						$result2 = $con->query($str);
+						$usr = $result2->fetch_assoc();
+						echo "<tr>";
+						echo "<th> " .$usr['FName']." ".$usr['LName']." </th>";
+						echo "<th> '$address' </th>";
+						echo "<th> '$district' </th>";
+						echo "<th> '$type' </th>";
+						echo "<th> '$price' </th>";
+						echo "</tr>";
+					}
+				}	
+			?>
 				</tbody>
 			</table>
 		</div>
@@ -67,7 +95,7 @@ require_once 'navbar.php';
 			<label class = "control-label col-sm-2" for = "type"> Property Type: </label>
 			<div class="col-sm-offset-2 col-sm-10">
 				<div class="radio">
-					<label class="control-label active"><input checked="" type="radio" name="type" value="undecided"> Undecided </label>
+					<label class="control-label"><input checked="" type="radio" name="type" value="Undecided"> Undecided </label>
 				</div>
 
 				<?php
@@ -95,6 +123,7 @@ require_once 'navbar.php';
 			<label class = "control-label col-sm-2" for = "district"> District: </label>
 			<div class="col-sm-offset-2 col-sm-10">
 				<select class="form-control" id="Distract" name="district">
+					<option> Undecided </option>
 					<?php
 						$str = "SELECT Distinct District FROM districts";
 						$result = $con->query($str);
@@ -118,6 +147,7 @@ require_once 'navbar.php';
 			<label class = "control-label col-sm-2" for = "poi"> Point Of Interest: </label>
 				<div class="col-sm-offset-2 col-sm-10">
 				<select class="form-control" id="POI" name="poi">
+					<option> Undecided </option>
 					<?php
 						$str = "SELECT Distinct POI FROM districts";
 						$result = $con->query($str);
@@ -165,7 +195,7 @@ require_once 'navbar.php';
 
 			<div class="col-sm-offset-2 col-sm-10">
 				<div class="radio">
-					<label class="control-label active"><input checked="" type="radio" name="price" value="undecided"> Undecided </label>
+					<label class="control-label"><input checked="" type="radio" name="price" value="Undecided"> Undecided </label>
 				</div>
 				<?php
 					$str = "SELECT MAX(price) AS mx FROM properties";
