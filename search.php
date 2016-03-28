@@ -13,20 +13,26 @@ require_once 'navbar.php';
 
 <?php
 	if (isset($_POST)) { 
-			$type;
-			$price;
-			$feature;
-			if (!(empty($_POST["type"])))
-				$type = $_POST["type"];
+			$type = $_POST["type"];
+			echo "<h3> '$type' </h3>";
+			$price = $_POST["price"];
+			echo "<h3> '$price' </h3>";
+			$feature = $_POST["features"];
+			if(!(empty($feature))) 
+  			{
+    			for($i=0; $i < count($feature); $i++)
+    			{
+    				echo ($feature[$i] . " ")	;
+    			}
+  			} 
+
 			$district = $_POST["district"];
 			$poi = $_POST["poi"];
-			if (!(empty($_POST["features"])))
-				$feature = $_POST["features"];
-			if (!(empty($_POST["type"])))
-				$price = $_POST["price"]
 
-
-
+			if ($type == "undecided" && $price == "undecided" && empty($feature))
+				$str = "SELECT * FROM properties, districts WHERE properties.district = '$district' AND properties.district = district.District AND district.POI = '$poi'";
+			
+			$result = $con->query($str);
 		?>
 		<div class="container">
 			<h1> Search Result </h1>
@@ -41,7 +47,11 @@ require_once 'navbar.php';
 					</tr>
 				</thead>
 				<tbody>
-					
+					<?php
+						if ($result->num_rows > 0) {
+							
+						}
+					?>
 				</tbody>
 			</table>
 		</div>
@@ -55,8 +65,11 @@ require_once 'navbar.php';
 	<form action="search.php" method="post" class = "form-horizontal" role = "form">
 		<div class = "form-group">
 			<label class = "control-label col-sm-2" for = "type"> Property Type: </label>
-
 			<div class="col-sm-offset-2 col-sm-10">
+				<div class="radio">
+					<label class="control-label active"><input checked="" type="radio" name="type" value="undecided"> Undecided </label>
+				</div>
+
 				<?php
 					$str = "SELECT distinct type FROM properties";
 					$result = $con->query($str);
@@ -65,7 +78,7 @@ require_once 'navbar.php';
 							
 				?>
 				<div class="radio">
-					<label class="control-label"><input type="radio" name="radioopt">
+					<label class="control-label"><input type="radio" name="type" value= "<?php echo $row['type']; ?>" >
 						<?php
 							echo $row['type'];
 						?>
@@ -81,7 +94,7 @@ require_once 'navbar.php';
 		<div class = "form-group">
 			<label class = "control-label col-sm-2" for = "district"> District: </label>
 			<div class="col-sm-offset-2 col-sm-10">
-				<select class="form-control" id="Distract">
+				<select class="form-control" id="Distract" name="district">
 					<?php
 						$str = "SELECT Distinct District FROM districts";
 						$result = $con->query($str);
@@ -104,7 +117,7 @@ require_once 'navbar.php';
 		<div class = "form-group">
 			<label class = "control-label col-sm-2" for = "poi"> Point Of Interest: </label>
 				<div class="col-sm-offset-2 col-sm-10">
-				<select class="form-control" id="Distract">
+				<select class="form-control" id="POI" name="poi">
 					<?php
 						$str = "SELECT Distinct POI FROM districts";
 						$result = $con->query($str);
@@ -134,7 +147,7 @@ require_once 'navbar.php';
 						if ($row['Type'] == 'tinyint(1)'){
 				?>
 				<div class="checkbox">
-					<label class="control-label"><input type="checkbox">
+					<label class="control-label"><input type="checkbox" name="features[]" value=" <?php echo $row['Field']; ?> ">
 						<?php
 							echo $row['Field'];
 						?>
@@ -151,6 +164,9 @@ require_once 'navbar.php';
 			<label class = "control-label col-sm-2" for = "price"> Price Range: </label>
 
 			<div class="col-sm-offset-2 col-sm-10">
+				<div class="radio">
+					<label class="control-label active"><input checked="" type="radio" name="price" value="undecided"> Undecided </label>
+				</div>
 				<?php
 					$str = "SELECT MAX(price) AS mx FROM properties";
 					$str2 = "SELECT MIN(price) AS mn FROM properties";
@@ -165,15 +181,15 @@ require_once 'navbar.php';
 						$row2 = $result2->fetch_assoc();
 						$min = $row2['mn'];
 
-						$range = ($max - $min) / 5; 
+						$range = ($max - $min) / 100; 
 
-						for ($i = 0; $i < 5; $i++){
+						for ($i = 0; $i < $range; $i++){
 							
 				?>
 				<div class="radio">
-					<label class="control-label"><input type="radio" name="radioopt">
+					<label class="control-label"><input type="radio" name="price" value= "<?php echo  (100 * $i);?>">
 						<?php
-							echo ($range * $i +  $min) . "-" . ($range * ($i+1) + $min);
+							echo (100 * $i) . "-" . (100 * ($i+1));
 						?>
 					</label>
 				</div>
