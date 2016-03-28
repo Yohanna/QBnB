@@ -13,28 +13,34 @@ require_once 'navbar.php';
 
 <?php
 	if (isset($_POST)) { 
-			$type = $_POST["type"];
-			$price = $_POST["price"];
+			if(!(empty($_POST["type"]))) 
+				$type = $_POST["type"];
+			if(!(empty($_POST["price"]))) 
+				$price = $_POST["price"];
+			if(!(empty($_POST["district"]))) 
+				$district = $_POST["district"];
+			if(!(empty($_POST["poi"]))) 
+				$poi = $_POST["poi"];
+
+			$str = "SELECT DISTINCT properties.property_id, supplier_id, address, properties.district, type, price FROM properties, districts, features WHERE properties.district = districts.District AND properties.property_id = features.property_id";
+			if (!(empty($_POST["type"])) && $type != "Undecided")
+				$str .= " AND properties.type = '$type'";
+			if (!(empty($_POST["price"])) && $price != "Undecided")
+				$str .= " AND properties.price >= '$price' AND properties.price <= ('$price' + 100)";
+			if (!(empty($_POST["district"])) && $district != "Undecided")
+				$str .= " AND properties.district = '$district'";
+			if (!(empty($_POST["poi"])) && $poi != "Undecided")
+				$str .= " AND districts.POI = '$poi'";
 			if(!(empty($_POST["features"]))) 
   			{
   				$feature = $_POST["features"];
-    		
-  			} 
+    			for($i=0; $i < count($feature); $i++)
+    			{
+      				$str .= " AND features." . $feature[$i] . " = 1";
+    			}
+  			}
 
-			$district = $_POST["district"];
-			$poi = $_POST["poi"];
-
-			$str = "SELECT DISTINCT property_id, supplier_id, address, properties.district, type, price FROM properties, districts WHERE properties.district = districts.District";
-			if ($type != "Undecided")
-				$str . "AND properties.type = '$type'";
-			if ($price != "Undecided")
-				$str . "AND properties.price >= '$price' AND properties.price <= ('$price' + 100)";
-			if ($district != "Undecided")
-				$str . "AND properties.district = '$district'";
-			if ($poi != "Undecided")
-				$str . "AND districts.POI = '$poi'";
-			$str . ";";
-
+  			/* echo "<p> '$str' </p>"; */
 			$result = $con->query($str);
 			?>
 
