@@ -17,9 +17,9 @@ if (userLoggedIn() == false){
 <body>
 	<div class="container">
 		<h1> Property Details </h1>
-		<?php 
+		<?php
 
-			if (isset($_GET['prop_id'])){	
+			if (isset($_GET['prop_id'])){
 				$id = $_GET["prop_id"];
 			}
 
@@ -27,7 +27,7 @@ if (userLoggedIn() == false){
 				$rate = $_POST["rate"];
 				$comment_txt = $_POST["comment"];
 				$time = date('Y-m-d G:i:s');
-				$str = "INSERT INTO comment (commenter_id, property_id, comment_text, rating, timestamp) VALUES 
+				$str = "INSERT INTO comment (commenter_id, property_id, comment_text, rating, timestamp) VALUES
 				(". $_SESSION["user_id"].",'$id','$comment_txt','$rate','$time');";
 				$result = $con->query($str);
 				if (!($result))
@@ -37,7 +37,7 @@ if (userLoggedIn() == false){
 			if (isset($_POST['request'])) {
 				if(!(empty($_POST["checkin"])))
 					$checkin_date = $_POST["checkin"];
-				$str = "INSERT INTO bookings (status, check_in, property_id, tenant_id) VALUES 
+				$str = "INSERT INTO bookings (status, check_in, property_id, tenant_id) VALUES
 				(3,'$checkin_date','$id',". $_SESSION["user_id"].")";
 				$result = $con->query($str);
 				if (!($result))
@@ -46,7 +46,7 @@ if (userLoggedIn() == false){
 
 			$str = "SELECT supplier_id, address, district, type, price FROM properties WHERE property_id = '$id'";
 			$result = $con->query($str);
-			
+
 			$supp_id; $address; $type; $price;
 
 			while($row = mysqli_fetch_array($result)) {
@@ -56,7 +56,7 @@ if (userLoggedIn() == false){
 				$price = $row["price"];
 			}
 
-			$str = "SELECT FName, LName, gender, email, phone_no, grad_year, faculty_id, degree_type FROM users WHERE user_id = '$supp_id'";			
+			$str = "SELECT FName, LName, gender, email, phone_no, grad_year, faculty_id, degree_type FROM users WHERE user_id = '$supp_id'";
 			$result = $con->query($str);
 
 			$FName; $LName; $gender; $email; $phone_no; $grad_year; $faculty_id; $degree_type;
@@ -87,11 +87,11 @@ if (userLoggedIn() == false){
 			if ($row['status'] != null && $row['status']!="")
 				echo "<button type='button' class='btn btn-default disabled'>Request Under Processing </button>";
 			else {
-				echo "<div class='row'>"
-				echo "<div class='col-sm-0'>"
+				echo "<div class='row'>";
+				echo "<div class='col-sm-0'>";
 				echo "<label for = 'date'> Check In Date: </label>";
 				echo "</div>";
-				echo "<div class='col-sm-0'>"
+				echo "<div class='col-sm-0'>";
 				echo "<input type='date' name='checkin' required>";
 				echo "</div>";
 				echo "</div>";
@@ -219,17 +219,17 @@ if (userLoggedIn() == false){
 						</table>
 					</div>
 				</div>
-				<div class="tab-pane" id="comments">			
+				<div class="tab-pane" id="comments">
 					<div>
 						<ul class="list-group" style="list-style-type: none; padding-top: 10px;">
-							<?php 
+							<?php
 								$str = "SELECT commenter_id, rating, comments.timestamp, comment_text FROM comments WHERE property_id = '$id'";
 								$result = $con->query($str);
 								$i = 0;
 								while($row = mysqli_fetch_array($result)){
 									if ($i == 1)
 										$i = 5;
-									else 
+									else
 										$i = 1;
 									$commenter = $row['commenter_id'];
 									$rating = $row['rating'];
@@ -248,9 +248,9 @@ if (userLoggedIn() == false){
 								<div class="container">
 									<p> <?php echo $text; ?></p>
 								</div>
-							</li>	
-							<?php		
-								}	
+							</li>
+							<?php
+								}
 							?>
 						</ul>
 					</div>
@@ -283,7 +283,7 @@ if (userLoggedIn() == false){
   										</div>
   									</div>
 								</form>
-							<?php }		
+							<?php }
 						?>
 					</div>
 				</div>
