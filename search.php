@@ -12,7 +12,7 @@ require_once 'navbar.php';
 <body>
 
 <?php
-	if (isset($_POST)) {
+	if (isset($_POST['submit'])) {
 			if(!(empty($_POST["type"])))
 				$type = $_POST["type"];
 			if(!(empty($_POST["price"])))

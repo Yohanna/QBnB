@@ -2,7 +2,7 @@
 
 require_once 'header.php';
 require_once 'navbar.php';
-	
+
 ?>
 
 <!DOCTYPE HTML>
@@ -81,38 +81,54 @@ require_once 'navbar.php';
 							</tbody>
 						</table>
 					</div>
-					<div class="container col-sm-offset-6 col-sm-6">
-						<table class="table">
-							<thead>
-								<td></td>
-								<td></td>
-							</thead>
-							<?php
-								$str = "SHOW COLUMNS FROM features";
-								$result = $con->query($str);
-								while($row = mysqli_fetch_array($result)){
-									if ($row['Type'] == 'tinyint(1)'){
-										$str2 = "SELECT ".$row['Field']." FROM features WHERE property_id = '$id'";
-										$result2 = $con->query($str2);
-										$row2 = mysqli_fetch_array($result2);
-										$field = $row['Field'];
-							?>
-							<tbody>
-								<td><?php echo $row['Field']; ?></td>
-								<td>
-									<?php
-										if ($row2[$field] == 1)
-											echo "Yes";
-										else
-											echo "No";
-									?>
-								</td>
-							</tbody>
-							<?php
+					<?php
+						$str = "SELECT pic_path FROM pictures WHERE property_id = '$id'";
+						$result = $con->query($str);
+						$row = mysqli_fetch_array($result);
+						$pic_path;
+						if ($row['pic_path'] == null || $row['pic_path'] == "") {
+							$pic_path = "property_pics/no-image.png";
+						} else {
+							$pic_path = $row['pic_path'];
+						}
+					?>
+					<div class="row">
+						<div class="col-sm-6">
+							<img src="<?php echo $pic_path ?>" style="max-width: 100%; max-height: 100%; height: auto;">
+						</div>
+						<div class="col-sm-6">
+							<table class="table">
+								<thead>
+									<td></td>
+									<td></td>
+								</thead>
+								<?php
+									$str = "SHOW COLUMNS FROM features";
+									$result = $con->query($str);
+									while($row = mysqli_fetch_array($result)){
+										if ($row['Type'] == 'tinyint(1)'){
+											$str2 = "SELECT ".$row['Field']." FROM features WHERE property_id = '$id'";
+											$result2 = $con->query($str2);
+											$row2 = mysqli_fetch_array($result2);
+											$field = $row['Field'];
+								?>
+								<tbody>
+									<td><?php echo $row['Field']; ?></td>
+									<td>
+										<?php
+											if ($row2[$field] == 1)
+												echo "Yes";
+											else
+												echo "No";
+										?>
+									</td>
+								</tbody>
+								<?php
+										}
 									}
-								}
-							?>
-						</table>
+								?>
+							</table>
+						</div>
 					</div>
 				</div>
 				<div class="tab-pane" id="user_info">
@@ -154,7 +170,50 @@ require_once 'navbar.php';
 					</div>
 				</div>
 				<div class="tab-pane" id="comments">
-					
+					<?php 
+						if (isset($_SESSION['isloggedIn']) && $_SESSION['isloggedIn']){
+							$str = "SELECT * FROM bookings WHERE tenant_id =".$_SESSION['user_id'];
+							$result = $con->query($str);
+							$row = mysqli_fetch_array($result);
+							if ($row['booking_id'] != null && $row['booking_id'] != "") {
+								echo "<button type='button' class='btn btn-primary'> Comment </button>";
+							}
+						}
+					?>
+					<div>
+						<ul class="list-group" style="list-style-type: none; padding-top: 10px;">
+							<?php 
+								$str = "SELECT commenter_id, rating, comments.timestamp, comment_text FROM comments WHERE property_id = '$id'";
+								$result = $con->query($str);
+								$i = 0;
+								while($row = mysqli_fetch_array($result)){
+									if ($i == 1)
+										$i = 5;
+									else 
+										$i = 1;
+									$commenter = $row['commenter_id'];
+									$rating = $row['rating'];
+									$time = $row['timestamp'];
+									$text = $row['comment_text'];
+									$str2 = "SELECT FName, LName FROM users WHERE user_id = '$commenter'";
+									$result2 = $con->query($str2);
+									$row2 = mysqli_fetch_array($result2);
+									$name = $row2['FName'] . " " . $row2['LName']; ?>
+							<li class="listing-group-item col-sm-offset-<?php echo $i; ?> col-sm-6" style="border-style: double;">
+								<div class="row">
+									<div class="col-md-3"><?php echo $name; ?></div>
+									<div class="col-md-4"><?php echo $time; ?></div>
+									<div class="col-md-2"><?php echo $rating; ?></div>
+								</div>
+								<div class="container">
+									<p> <?php echo $text; ?></p>
+								</div>
+							</li>	
+							<?php		
+								}	
+							?>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
