@@ -85,7 +85,7 @@ require_once 'navbar.php';
 						echo "<th> '$district' </th>";
 						echo "<th> '$type' </th>";
 						echo "<th> '$price' </th>"; ?>
-                        <th><a href="result.php?prop_id=<?= $prop_id ?> ">Browse</a></th>
+                        <th><a href="view_property.php?prop_id=<?= $prop_id ?>">Browse</a></th>
 						<?php echo "</tr>";
 					}
 				}
