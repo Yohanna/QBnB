@@ -45,7 +45,7 @@ if( userLoggedIn() ) {
     header("Location: profile.php");
     die();
   }
-} // session_status() == PHP_SESSION_ACTIVE
+}
 else { // No logged in user
   header("Location: index.php");
   die();
