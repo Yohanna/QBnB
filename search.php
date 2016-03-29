@@ -31,7 +31,7 @@ require_once 'navbar.php';
 				$str .= " AND properties.district = '$district'";
 			if (!(empty($_POST["poi"])) && $poi != "Undecided")
 				$str .= " AND districts.POI = '$poi'";
-			if(!(empty($_POST["features"]))) 
+			if (!(empty($_POST["features"]))) 
   			{
   				$feature = $_POST["features"];
     			for($i=0; $i < count($feature); $i++)
@@ -85,7 +85,7 @@ require_once 'navbar.php';
 						echo "<th> '$district' </th>";
 						echo "<th> '$type' </th>";
 						echo "<th> '$price' </th>"; ?>
-						<th><a href="result.php?prop_id = <?php echo '$prop_id';?> ">Browse</a></th>
+						<th><a href="result.php?prop_id=<?php echo $prop_id; ?> ">Browse</a></th>
 						<?php echo "</tr>";
 					}
 				}	

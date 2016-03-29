@@ -13,7 +13,9 @@ require_once 'navbar.php';
 	<div class="container">
 		<h1> Property Details </h1>
 		<?php 
-			$id = _POST["id"];
+			if (isset($_GET['prop_id'])){	
+				$id = $_GET["prop_id"];
+			}
 
 			$str = "SELECT supplier_id, address, district, type, price FROM properties WHERE property_id = '$id'";
 			$result = $con->query($str);
@@ -30,7 +32,7 @@ require_once 'navbar.php';
 			$str = "SELECT FName, LName, gender, email, phone_no, grad_year, faculty_id, degree_type FROM users WHERE user_id = '$supp_id'";			
 			$result = $con->query($str);
 
-			$FName; $LName; $gender; $email; $phone_no; $grad_year; $faculty_id, $degree_type;
+			$FName; $LName; $gender; $email; $phone_no; $grad_year; $faculty_id; $degree_type;
 			while($row = mysqli_fetch_array($result)) {
 				$LName = $row["LName"];
 				$FName = $row["FName"];
@@ -46,7 +48,7 @@ require_once 'navbar.php';
 
 			$faculty;
 			while($row = mysqli_fetch_array($result)) {
-				$faculty = $row["faculty_id"];
+				$faculty = $row["faculty"];
 			}
 
 		?>
