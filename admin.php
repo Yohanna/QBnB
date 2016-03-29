@@ -81,6 +81,7 @@ else { // No logged in user
           <table class="table table-bordered table-striped" >
             <thead>
             <tr>
+              <th>No.</th>
               <th>Address</th>
               <th>District</th>
               <th>Type</th>
@@ -93,9 +94,11 @@ else { // No logged in user
             <tbody>
 
             <?php
+              $i = 1;
               while($row = $result->fetch_assoc()):
             ?>
             <tr>
+              <td><?= $i; $i++ ?></td>
               <td><?=$row['address'] ?></td>
               <td><?=$row['district']?></td>
               <td><?=$row['type']?></td>
@@ -142,6 +145,7 @@ else { // No logged in user
       <table class="table table-bordered table-striped" >
       <thead>
         <tr>
+          <th>No.</th>
           <th>Supplier Name</th>
           <th>Gender</th>
           <th>Email</th>
@@ -155,24 +159,28 @@ else { // No logged in user
 
       <tbody>
     <?php
+        $i = 0;
         while($users = $result->fetch_assoc()):
 
           // If the current user is the logged in user, skip that user since Admins can't
           // delete themselves.
           if($users['user_id'] == $_SESSION['user_id'])
             continue;
+    ?>
 
-          echo "<tr>
-                  <td>". $users['FName'] . ' ' . $users['LName'] . "</td>
-                  <td>" . $users['gender'] . "</td>
-                  <td>" . $users['email'] . "</td>
-                  <td>" . $users['phone_no'] . "</td>
-                  <td>" . $users['grad_year'] . "</td>
-                  <td>" . $users['faculty_id'] . "</td>
-                  <td>" . $users['degree_type'] . "</td>
-                  <td>" . "<a type=\"button\" class=\"btn btn-danger\" href=\"delete_user.php?user_id=" . $users['user_id'] . "\">Delete User</a>" . "</td>
-                </tr>";
+          <tr>
+            <td><?= $i; $i++ ?></td>
+            <td><?= $users['FName'] . ' ' . $users['LName'] ?></td>
+            <td><?= $users['gender']?></td>
+            <td><?= $users['email']?></td>
+            <td><?= $users['phone_no']?></td>
+            <td><?= $users['grad_year']?></td>
+            <td><?= $users['faculty_id']?></td>
+            <td><?= $users['degree_type'] ?></td>
+            <td><a type="button" class="btn btn-danger" href=<?php echo "delete_user.php?user_id=" . $users['user_id']?> > Delete User</a></td>
+          </tr>
 
+        <?php
         endwhile;
     } // enc else of if($num == 0)
     ?>
