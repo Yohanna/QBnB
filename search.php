@@ -2,7 +2,7 @@
 
 require_once 'header.php';
 require_once 'navbar.php';
-	
+
 ?>
 
 <!DOCTYPE HTML>
@@ -12,14 +12,14 @@ require_once 'navbar.php';
 <body>
 
 <?php
-	if (isset($_POST)) { 
-			if(!(empty($_POST["type"]))) 
+	if (isset($_POST)) {
+			if(!(empty($_POST["type"])))
 				$type = $_POST["type"];
-			if(!(empty($_POST["price"]))) 
+			if(!(empty($_POST["price"])))
 				$price = $_POST["price"];
-			if(!(empty($_POST["district"]))) 
+			if(!(empty($_POST["district"])))
 				$district = $_POST["district"];
-			if(!(empty($_POST["poi"]))) 
+			if(!(empty($_POST["poi"])))
 				$poi = $_POST["poi"];
 
 			$str = "SELECT DISTINCT properties.property_id, supplier_id, address, properties.district, type, price FROM properties, districts, features WHERE properties.district = districts.District AND properties.property_id = features.property_id";
@@ -31,7 +31,7 @@ require_once 'navbar.php';
 				$str .= " AND properties.district = '$district'";
 			if (!(empty($_POST["poi"])) && $poi != "Undecided")
 				$str .= " AND districts.POI = '$poi'";
-			if(!(empty($_POST["features"]))) 
+			if(!(empty($_POST["features"])))
   			{
   				$feature = $_POST["features"];
     			for($i=0; $i < count($feature); $i++)
@@ -49,12 +49,12 @@ require_once 'navbar.php';
 
 			<?php
 				if ($result == FALSE) {
-					echo "<body> Sorry your search returns no result, 
+					echo "<body> Sorry your search returns no result,
 					please try to search again.</body>";
 				}
 				else { ?>
 
-			<table class="table table-hover"> 
+			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th> Owner </th>
@@ -78,17 +78,17 @@ require_once 'navbar.php';
 						$str = "SELECT FName, LName FROM users WHERE user_id = '$supp_id'";
 						$result2 = $con->query($str);
 						$usr = $result2->fetch_assoc(); ?>
-						<?php 
+						<?php
 						echo "<tr>";
 						echo "<th> " .$usr['FName']." ".$usr['LName']." </th>";
 						echo "<th> '$address' </th>";
 						echo "<th> '$district' </th>";
 						echo "<th> '$type' </th>";
 						echo "<th> '$price' </th>"; ?>
-						<th><a href="result.php?prop_id = <?php echo '$prop_id';?> ">Browse</a></th>
+                        <th><a href="result.php?prop_id=<?= $prop_id ?> ">Browse</a></th>
 						<?php echo "</tr>";
 					}
-				}	
+				}
 			?>
 				</tbody>
 			</table>
@@ -113,7 +113,7 @@ require_once 'navbar.php';
 					$result = $con->query($str);
 					if ($result->num_rows > 0) {
 						while ($row = $result->fetch_assoc()) {
-							
+
 				?>
 				<div class="radio">
 					<label class="control-label"><input type="radio" name="type" value= "<?php echo $row['type']; ?>" >
@@ -122,7 +122,7 @@ require_once 'navbar.php';
 						?>
 					</label>
 				</div>
-							<?php 
+							<?php
 						}
 					}
 				?>
@@ -215,16 +215,16 @@ require_once 'navbar.php';
 					$result2 = $con->query($str2);
 					if ($result->num_rows > 0) {
 						$row = $result->fetch_assoc();
-						$max = $row['mx'];	
+						$max = $row['mx'];
 						$range = $max/5.0;
-						
+
 						$row2 = $result2->fetch_assoc();
 						$min = $row2['mn'];
 
-						$range = ($max - $min) / 100; 
+						$range = ($max - $min) / 100;
 
 						for ($i = 0; $i < $range; $i++){
-							
+
 				?>
 				<div class="radio">
 					<label class="control-label"><input type="radio" name="price" value= "<?php echo  (100 * $i);?>">
@@ -238,7 +238,7 @@ require_once 'navbar.php';
 					}
 				?>
 
-				<div class="form-group"> 
+				<div class="form-group">
     				<div class="col-sm-offset-2 col-sm-10">
    				    	<button type="submit" class="btn btn-default" name="submit">Submit</button>
   					</div>
