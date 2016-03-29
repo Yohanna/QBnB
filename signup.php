@@ -77,6 +77,8 @@ if(isset($_POST['submitBtn'])){
 
         if ($stmt->execute()){
             $userMsg = '<br><p class="bg-success text-center">Your Account has been created</p>';
+            header("Location: profile.php");
+            die();
         }
         else{
             $userMsg = '<br><p class="bg-danger text-center">Execute Failed</p>';
