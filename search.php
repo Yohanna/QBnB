@@ -3,6 +3,11 @@
 require_once 'header.php';
 require_once 'navbar.php';
 
+if (userLoggedIn() == false){
+	header("Location: index.php");
+	die();
+}
+
 ?>
 
 <!DOCTYPE HTML>

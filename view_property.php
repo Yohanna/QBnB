@@ -3,6 +3,11 @@
 require_once 'header.php';
 require_once 'navbar.php';
 
+if (userLoggedIn() == false){
+	header("Location: index.php");
+	die();
+}
+
 ?>
 
 <!DOCTYPE HTML>
@@ -13,6 +18,16 @@ require_once 'navbar.php';
 	<div class="container">
 		<h1> Property Details </h1>
 		<?php 
+
+			if (isset($_POST['submit'])) {
+				$rate = $_POST["rate"];
+				$comment_txt = $_POST["comment"];
+				$time = date('Y-m-d G:i:s');
+				$str = "INSERT INTO comment (commenter_id, property_id, comment_text, rating, timestamp) VALUES 
+				(". $_SESSION["user_id"].",'$id','$comment_txt','$rate','$time');";
+			}
+
+
 			if (isset($_GET['prop_id'])){	
 				$id = $_GET["prop_id"];
 			}
@@ -169,17 +184,7 @@ require_once 'navbar.php';
 						</table>
 					</div>
 				</div>
-				<div class="tab-pane" id="comments">
-					<?php 
-						if (isset($_SESSION['isloggedIn']) && $_SESSION['isloggedIn']){
-							$str = "SELECT * FROM bookings WHERE tenant_id =".$_SESSION['user_id'];
-							$result = $con->query($str);
-							$row = mysqli_fetch_array($result);
-							if ($row['booking_id'] != null && $row['booking_id'] != "") {
-								echo "<button type='button' class='btn btn-primary'> Comment </button>";
-							}
-						}
-					?>
+				<div class="tab-pane" id="comments">			
 					<div>
 						<ul class="list-group" style="list-style-type: none; padding-top: 10px;">
 							<?php 
@@ -213,6 +218,38 @@ require_once 'navbar.php';
 								}	
 							?>
 						</ul>
+					</div>
+					<div class="container">
+						<?php
+							$str = "SELECT * FROM bookings WHERE tenant_id =".$_SESSION['user_id'];
+							$result = $con->query($str);
+							$row = mysqli_fetch_array($result);
+							if ($row['booking_id'] != null && $row['booking_id'] != "" && $row['status'] == 1) { ?>
+								<form action="view_property.php" method="post" class="form-horizontal" role="role">
+									<div class="form-group">
+										<div class="col-sm-offset-2 col-sm-10">
+											<label class = "control-label col-sm-2" for = "type"> Your Rating: </label>
+											<label class="radio-inline"><input type="radio" name="rate" value="1">1</label>
+											<label class="radio-inline"><input type="radio" name="rate" value="2">2</label>
+											<label class="radio-inline"><input type="radio" name="rate" value="3">3</label>
+											<label class="radio-inline"><input type="radio" name="rate" value="4">4</label>
+											<label class="radio-inline"><input checked="" type="radio" name="rate" value="5">5</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-2 col-sm-10">
+											<label class = "control-label col-sm-2" for = "type"> Comment Here: </label>
+											<textarea class="form-control" rows="5" id="comment"></textarea>
+										</div>
+									</div>
+									<div class="form-group">
+    									<div class="col-sm-offset-10 col-sm-2">
+   				    						<button type="submit" class="btn btn-default" name="submit"> Comment </button>
+  										</div>
+  									</div>
+								</form>
+							<?php }		
+						?>
 					</div>
 				</div>
 			</div>
