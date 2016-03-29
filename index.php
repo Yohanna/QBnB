@@ -67,7 +67,7 @@ if(isset($_POST['loginBtn'])){
             } else {
                 //If the email/password doesn't match a user in our database
                 // Display an error message and the login form
-                echo '<br><p class="bg-danger text-center">Failed to login. Wrong Email or Password</p>' . nl;
+                echo '<br><p class="alert alert-danger text-center">Failed to login. Wrong Email or Password</p>';
             }
         }
         else {
