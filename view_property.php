@@ -19,17 +19,29 @@ if (userLoggedIn() == false){
 		<h1> Property Details </h1>
 		<?php 
 
+			if (isset($_GET['prop_id'])){	
+				$id = $_GET["prop_id"];
+			}
+
 			if (isset($_POST['submit'])) {
 				$rate = $_POST["rate"];
 				$comment_txt = $_POST["comment"];
 				$time = date('Y-m-d G:i:s');
 				$str = "INSERT INTO comment (commenter_id, property_id, comment_text, rating, timestamp) VALUES 
 				(". $_SESSION["user_id"].",'$id','$comment_txt','$rate','$time');";
+				$result = $con->query($str);
+				if (!($result))
+					echo "Insertion Error AT Comment";
 			}
 
-
-			if (isset($_GET['prop_id'])){	
-				$id = $_GET["prop_id"];
+			if (isset($_POST['request'])) {
+				if(!(empty($_POST["checkin"])))
+					$checkin_date = $_POST["checkin"];
+				$str = "INSERT INTO bookings (status, check_in, property_id, tenant_id) VALUES 
+				(3,'$checkin_date','$id',". $_SESSION["user_id"].")";
+				$result = $con->query($str);
+				if (!($result))
+					echo "Insertion Error AT Request";
 			}
 
 			$str = "SELECT supplier_id, address, district, type, price FROM properties WHERE property_id = '$id'";
@@ -60,13 +72,36 @@ if (userLoggedIn() == false){
 
 			$str = "SELECT faculty FROM faculties WHERE faculty_id = '$faculty_id'";
 			$result = $con->query($str);
-
 			$faculty;
 			while($row = mysqli_fetch_array($result)) {
 				$faculty = $row["faculty"];
 			}
-
 		?>
+
+		<?php
+			$str = "SELECT status FROM bookings WHERE tenant_id=".$_SESSION['user_id']." And property_id = '$id'";
+			$result = $con->query($str);
+			$row = mysqli_fetch_array($result);
+			echo "<form action='view_property' method='post' class = 'form-horizontal' role = 'form'>";
+			echo "<div class = 'form-group'>";
+			if ($row['status'] != null && $row['status']!="")
+				echo "<button type='button' class='btn btn-default disabled'>Request Under Processing </button>";
+			else {
+				echo "<div class='row'>"
+				echo "<div class='col-sm-0'>"
+				echo "<label for = 'date'> Check In Date: </label>";
+				echo "</div>";
+				echo "<div class='col-sm-0'>"
+				echo "<input type='date' name='checkin' required>";
+				echo "</div>";
+				echo "</div>";
+				echo "<button type='button' class='btn btn-success' name='request'>Send Request</button>";
+			}
+			echo "</div>";
+			echo "</form>";
+		?>
+
+
 		<div class="col-sm-15">
 			<ul class="nav nav-tabs" id="prop_tab">
 				<li class="active"><a href="#property" data-toggle="tab"> Property Info </a></li>
