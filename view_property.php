@@ -104,7 +104,7 @@ if (userLoggedIn() == false){
 				echo "<input type='date' name='checkin' required>";
 				echo "</div>";
 				echo "<div class='col-sm-2'>";
-				echo "<button type='button' class='btn btn-success' name='request'>Send Request</button>";
+				echo "<button type='submit' class='btn btn-success' name='request'>Send Request</button>";
 				echo "</div>";
 				echo "</div>";
 			}
