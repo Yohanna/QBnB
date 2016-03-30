@@ -54,9 +54,10 @@ if (userLoggedIn() == false){
 			<h1> Search Result </h1>
 
 			<?php
-				if ($result == FALSE) {
-					echo "<body> Sorry your search returns no result,
-					please try to search again.</body>";
+				if ($result->num_rows <= 0) {
+					echo "<div class='alert alert-warning'>
+ 						Your search returned no result.
+						</div>";
 				}
 				else { ?>
 

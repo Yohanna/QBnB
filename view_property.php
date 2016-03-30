@@ -32,6 +32,10 @@ if (userLoggedIn() == false){
 				$result = $con->query($str);
 				if (!($result))
 					echo "Insertion Error AT Comment";
+				else
+					echo "<div class='alert alert-success'>
+ 						Your request is placed successfully.
+						</div>";
 			}
 
 			if (isset($_POST['request'])) {
@@ -42,7 +46,12 @@ if (userLoggedIn() == false){
 				$result = $con->query($str);
 				if (!($result))
 					echo "Insertion Error AT Request";
-			}
+				else ?>
+					<script type="text/javascript">
+					alert("Your request has been sent.");
+					window.location.href = "search.php";
+					</script>
+			<?php }
 
 			$str = "SELECT supplier_id, address, district, type, price FROM properties WHERE property_id = '$id'";
 			$result = $con->query($str);
@@ -82,20 +91,22 @@ if (userLoggedIn() == false){
 			$str = "SELECT status FROM bookings WHERE tenant_id=".$_SESSION['user_id']." And property_id = '$id'";
 			$result = $con->query($str);
 			$row = mysqli_fetch_array($result);
-			echo "<form action='view_property.php?prop_id=".echo $id;."' method='post' class = 'form-horizontal' role = 'form'>";
+			echo "<form action='view_property.php?prop_id=".$id."' method='post' class = 'form-horizontal' role = 'form'>";
 			echo "<div class = 'form-group'>";
-			if ($row['status'] != null && $row['status']!="")
+			if (($row['status'] != null && $row['status']!="") && $row['status'] == 3) 
 				echo "<button type='button' class='btn btn-default disabled'>Request Under Processing </button>";
 			else {
-				echo "<div class='row'>";
-				echo "<div class='col-sm-0'>";
+				echo "<div class='row col-sm-offset-0'>";
+				echo "<div class='col-md-1'>";
 				echo "<label for = 'date'> Check In Date: </label>";
 				echo "</div>";
-				echo "<div class='col-sm-0'>";
+				echo "<div class='col-sm-2'>";
 				echo "<input type='date' name='checkin' required>";
 				echo "</div>";
-				echo "</div>";
+				echo "<div class='col-sm-2'>";
 				echo "<button type='button' class='btn btn-success' name='request'>Send Request</button>";
+				echo "</div>";
+				echo "</div>";
 			}
 			echo "</div>";
 			echo "</form>";
@@ -254,15 +265,15 @@ if (userLoggedIn() == false){
 							?>
 						</ul>
 					</div>
-					<div class="container">
+					<div class="container" style="position: absolute; top: 500px;">
 						<?php
 							$str = "SELECT * FROM bookings WHERE tenant_id =".$_SESSION['user_id'];
 							$result = $con->query($str);
 							$row = mysqli_fetch_array($result);
 							if ($row['booking_id'] != null && $row['booking_id'] != "" && $row['status'] == 1) { ?>
-								<form action="view_property.php?prop_id='$id'" method="post" class="form-horizontal" role="role">
+								<form action="view_property.php?prop_id='$id'" method="post" class="form-horizontal" role="comment">
 									<div class="form-group">
-										<div class="col-sm-offset-2 col-sm-10">
+										<div>
 											<label class = "control-label col-sm-2" for = "type"> Your Rating: </label>
 											<label class="radio-inline"><input type="radio" name="rate" value="1">1</label>
 											<label class="radio-inline"><input type="radio" name="rate" value="2">2</label>
@@ -272,7 +283,7 @@ if (userLoggedIn() == false){
 										</div>
 									</div>
 									<div class="form-group">
-										<div class="col-sm-offset-2 col-sm-10">
+										<div>
 											<label class = "control-label col-sm-2" for = "type"> Comment Here: </label>
 											<textarea class="form-control" rows="5" id="comment"></textarea>
 										</div>
