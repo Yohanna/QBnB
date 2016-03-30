@@ -82,7 +82,7 @@ if (userLoggedIn() == false){
 			$str = "SELECT status FROM bookings WHERE tenant_id=".$_SESSION['user_id']." And property_id = '$id'";
 			$result = $con->query($str);
 			$row = mysqli_fetch_array($result);
-			echo "<form action='view_property' method='post' class = 'form-horizontal' role = 'form'>";
+			echo "<form action='view_property.php?prop_id=".echo $id;."' method='post' class = 'form-horizontal' role = 'form'>";
 			echo "<div class = 'form-group'>";
 			if ($row['status'] != null && $row['status']!="")
 				echo "<button type='button' class='btn btn-default disabled'>Request Under Processing </button>";
@@ -260,7 +260,7 @@ if (userLoggedIn() == false){
 							$result = $con->query($str);
 							$row = mysqli_fetch_array($result);
 							if ($row['booking_id'] != null && $row['booking_id'] != "" && $row['status'] == 1) { ?>
-								<form action="view_property.php" method="post" class="form-horizontal" role="role">
+								<form action="view_property.php?prop_id='$id'" method="post" class="form-horizontal" role="role">
 									<div class="form-group">
 										<div class="col-sm-offset-2 col-sm-10">
 											<label class = "control-label col-sm-2" for = "type"> Your Rating: </label>
