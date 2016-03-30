@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2016 at 06:15 AM
+-- Generation Time: Mar 30, 2016 at 10:02 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -53,11 +53,11 @@ CREATE TABLE IF NOT EXISTS `bookings` (
 --
 
 INSERT INTO `bookings` (`booking_id`, `status`, `check_in`, `property_id`, `tenant_id`) VALUES
-(1, 1, '2016-02-17', 1, 1),
+(1, 1, '2016-02-17', 1, 3),
 (2, 2, '2016-02-23', 2, 2),
-(3, 3, '2016-02-17', 3, 3),
+(3, 3, '2016-02-17', 3, 1),
 (4, 1, '2016-03-31', 2, 7),
-(5, 2, '2016-04-27', 5, 7);
+(5, 2, '2016-04-27', 5, 5);
 
 -- --------------------------------------------------------
 
@@ -274,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `degree_type` varchar(5) COLLATE utf16_unicode_520_ci NOT NULL,
   PRIMARY KEY (`user_id`),
   KEY `faculty_id_index` (`faculty_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci;
 
 --
 -- RELATIONS FOR TABLE `users`:
@@ -293,7 +293,8 @@ INSERT INTO `users` (`user_id`, `FName`, `LName`, `gender`, `email`, `password`,
 (5, 'Dylan', 'Liu', 'M', 'dl@queensu.ca', 'pass', '6133333333', 2017, 1, 0, 'BAs'),
 (6, 'Jack', 'Qiao', 'M', 'jq@queensu.ca', 'pass', '6133333333', 2017, 1, 0, 'BAs'),
 (7, 'Yohanna', 'Gadelrab', 'M', 'y', '1234', '3333333333', 2017, 3, 1, 'B.Sc.'),
-(8, 'John', 'Doe', 'M', 'J', '1234', '3433333333', 2017, 1, 0, 'BA');
+(8, 'John', 'Doe', 'M', 'J', '1234', '3433333333', 2017, 1, 0, 'BA'),
+(9, 'Yoha', 'Gad', 'F', 'adsf@ca.ca', '123', '3', 2003, 1, 0, 'BA');
 
 --
 -- Constraints for dumped tables
