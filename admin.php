@@ -78,7 +78,7 @@ else { // No logged in user
 
         <div class="container">
           <h2>Current Properties in QBnB</h2>
-          <table class="table table-bordered table-striped" >
+          <table class="table table-bordered table-hover" >
             <thead>
             <tr>
               <th>No.</th>
@@ -131,7 +131,7 @@ else { // No logged in user
     $stmt->execute();
     $result = $stmt->get_result();
 
-    $num = $result->num_rows;;
+    $num = $result->num_rows;
 
     if($num == 0) // No users currently registered in QBnB
       echo "<h3>Other than you, there are currently no users registered in QBnB</h3>";
@@ -142,7 +142,7 @@ else { // No logged in user
     <div class="container">
       <h2>Current Users in QBnB</h2>
 
-      <table class="table table-bordered table-striped" >
+      <table class="table table-bordered table-hover" >
       <thead>
         <tr>
           <th>No.</th>
