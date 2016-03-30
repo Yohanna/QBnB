@@ -30,10 +30,10 @@ if( userLoggedIn() ){
                     if(userLoggedIn()){
                     ?>
                         <ul class="nav navbar-nav">
-                        <li class="active"><a href="search.php"><span class="glyphicon glyphicon-search"></span> Search</a></li>
+                        <li><a href="search.php"><span class="glyphicon glyphicon-search"></span> Search</a></li>
                         <li><a href="user_properties.php"><span class="glyphicon glyphicon-home"></span> My Properties</a></li>
                         <li><a href="add_property.php"><span class="glyphicon glyphicon-plus"></span> Add a property</a></li>
-                        <li><a href="booking_history.php?user_id=<?= $_SESSION['user_id']?>"><span class="glyphicon glyphicon-time"></span> Booking History</a></li>
+                        <li><a href="booking_requests.php?user_id=<?= $_SESSION['user_id']?>"><span class="glyphicon glyphicon-time"></span> Booking Requests</a></li>
                         </ul>
 
                         <!-- Right Navbar section -->
