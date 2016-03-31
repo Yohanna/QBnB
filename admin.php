@@ -159,7 +159,7 @@ else { // No logged in user
 
       <tbody>
     <?php
-        $i = 0;
+        $i = 1;
         while($users = $result->fetch_assoc()):
 
           // If the current user is the logged in user, skip that user since Admins can't
