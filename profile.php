@@ -11,30 +11,29 @@ if(userLoggedIn() == false){
     header("Location: index.php");
     die();
 }
-else {
-    // SELECT query
-    $query = "SELECT FName, LName, gender, email, phone_no, grad_year, faculty_id, degree_type FROM users WHERE user_id=?";
 
-    $stmt = $con->prepare($query);
-    $stmt->bind_Param("i", $_SESSION['user_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
+// SELECT query
+$query = "SELECT FName, LName, gender, email, phone_no, grad_year, faculty_id, degree_type FROM users WHERE user_id=?";
 
-    // Row data
-    $row = $result->fetch_assoc();
+$stmt = $con->prepare($query);
+$stmt->bind_Param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Row data
+$row = $result->fetch_assoc();
 
 
-    // Get Faculty name from Facutlies table
-    $query = "SELECT faculty FROM faculties WHERE faculty_id=?";
+// Get Faculty name from Facutlies table
+$query = "SELECT faculty FROM faculties WHERE faculty_id=?";
 
-    $stmt = $con->prepare($query);
-    $stmt->bind_Param("i", $row['faculty_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
+$stmt = $con->prepare($query);
+$stmt->bind_Param("i", $row['faculty_id']);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    $facultyName = $result->fetch_assoc();
+$facultyName = $result->fetch_assoc();
 
-}
 ?>
 
 
@@ -46,9 +45,20 @@ else {
 
     <body>
 
+        <hr class = "colorgraph">
+
+        <div class="container">
+            <div class="row text-center" >
+                <div class="col-sm-12">
+                    <a type="button" class="btn btn-lg btn-primary" style="align: center;" href="edit_profile.php">Edit Your Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <hr class = "colorgraph"> <br>
 
         <!-- Display User Data -->
-                <div class="container">
+        <div class="container">
 
         <table class="table table-bordered table-striped" >
         <thead>
@@ -80,16 +90,6 @@ else {
         </tbody>
 
         </table>
-        </div>
-
-        <hr class = "colorgraph"> <br>
-
-        <div class="container">
-            <div class="row text-center" >
-                <div class="col-sm-12">
-                    <a type="button" class="btn btn-lg btn-primary" style="align: center;" href="edit_profile.php?user_id=<?=$_SESSION['user_id']?>">Edit Your Profile</a>
-                </div>
-            </div>
         </div>
 
     </body>
