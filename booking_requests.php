@@ -15,6 +15,12 @@ if(userLoggedIn() == false){
 }
 
 
+// This page should only be viewed by Admins or if the _SESSION['user_id'] == _GET['user_id']
+if ($_SESSION['is_admin'] == False || ($_SESSION['user_id'] != $_GET['user_id'])){
+    header("Location: profile.php");
+    die();
+}
+
 // Get list of properties that user owns and a request has been made to rent them.
 
 
@@ -45,10 +51,6 @@ $result_made = $stmt->get_result();
 // Number of rows in requests made
 $num_req_made = $result_made->num_rows;
 
-// $row_req_made = $result->fetch_assoc();
-
-// varDump($row_req_made);
-
 ?>
 
 
@@ -56,7 +58,7 @@ $num_req_made = $result_made->num_rows;
 <html>
 <head>
     <title>Booking Requests</title>
-    <h1 style="text-align: center;">Here's a list of requests you have received or made.</h1>
+    <h1 style="text-align: center;">Here's a list of requests you have received or made</h1>
 </head>
 <body>
     <div class="container">
@@ -84,8 +86,8 @@ $num_req_made = $result_made->num_rows;
 
             <tbody>
             <?php
-              $i = 1;
-              while($row_req_rec = $result_rec->fetch_assoc()):
+            $i = 1;
+            while($row_req_rec = $result_rec->fetch_assoc()):
             ?>
                 <tr>
                     <td><?= $i; $i++ ?></td>
@@ -108,12 +110,14 @@ $num_req_made = $result_made->num_rows;
                         <a type="button" class="btn btn-danger" href="reject_request.php?booking_id=<?=$row_req_rec['booking_id']?>">Reject</a>
                     </td>
                 </tr>
+            <?php
+            endwhile; // $row_req_rec = $result_rec->fetch_assoc()
+            ?>
 
             </tbody>
         </table >
-        <?php
-            endwhile; // $row_req_rec = $result_rec->fetch_assoc()
 
+        <?php
         } // if ($num_req_rec > 0)
         else{ // This user's properties didn't receive any requests
             echo "<h3 class='alert alert-info'>You didn't receive any request so far!</h3>";
@@ -174,13 +178,15 @@ $num_req_made = $result_made->num_rows;
                         <a type="button" class="btn btn-danger" href="cancel_request.php?booking_id=<?=$row_req_made['booking_id']?>">Cancel</a>
                     </td>
                 </tr>
+            <?php
+                endwhile; // $row_req_made = $result_made->fetch_assoc()
+            ?>
 
             </tbody>
 
         </table>
-        <?php
-            endwhile; // $row_req_made = $result_made->fetch_assoc()
 
+        <?php
         } // if ($row_req_made > 0)
         else{ // This user didn't make any requests
             echo "<h3 class='alert alert-info'>You didn't make any request so far!</h3>";

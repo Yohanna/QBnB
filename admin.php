@@ -106,7 +106,6 @@ else { // No logged in user
               <td><?=$row['FName'] . ' ' . $row['LName']?></td>
               <td>
               <a type="button" class="btn btn-info" href="view_property.php?prop_id=<?=$row['property_id']?>">View</a>
-              <a type="button" class="btn btn-warning" href="edit_property.php?property_id=<?=$row['property_id']?>">Edit</a>
               <a type="button" class="btn btn-danger" href="delete_property.php?property_id=<?=$row['property_id']?>">Delete</a>
               </td>
             </tr>

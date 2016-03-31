@@ -55,7 +55,7 @@ if(isset($_POST['submitBtn'])){
 
     // Check if the password match
     if($password != $repassword){
-        $passError = '<br><p class="alert alert-danger text-center">The passwords don\'t match</p>';
+        $passError = '<br><p class="alert alert-danger text-center">The passwords do not match</p>';
 
         $validForm = false;
     }
