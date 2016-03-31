@@ -106,6 +106,7 @@ else { // No logged in user
               <td><?=$row['FName'] . ' ' . $row['LName']?></td>
               <td>
               <a type="button" class="btn btn-info" href="view_property.php?prop_id=<?=$row['property_id']?>">View</a>
+              <a type="button" class="btn btn-primary" href="property_history.php?prop_id=<?=$row['property_id']?>">Summarize History</a>
               <a type="button" class="btn btn-danger" href="delete_property.php?property_id=<?=$row['property_id']?>">Delete</a>
               </td>
             </tr>
@@ -188,7 +189,10 @@ else { // No logged in user
             <td><?= $users['grad_year']?></td>
             <td><?= $facultyName['faculty']?></td>
             <td><?= $users['degree_type'] ?></td>
-            <td><a type="button" class="btn btn-danger" href=<?php echo "delete_user.php?user_id=" . $users['user_id']?> > Delete User</a></td>
+            <td class="col-md-3">
+              <a type="button" class="btn btn-primary" href="booking_requests.php?user_id=<?=$users['user_id']?>">Summarize History</a>
+              <a type="button" class="btn btn-danger" href=<?php echo "delete_user.php?user_id=" . $users['user_id']?> > Delete User</a>
+            </td>
           </tr>
 
         <?php
