@@ -16,7 +16,7 @@ if(userLoggedIn() == false){
 
 
 // This page should only be viewed by Admins or if the _SESSION['user_id'] == _GET['user_id']
-if ($_SESSION['is_admin'] == False || ($_SESSION['user_id'] != $_GET['user_id'])){
+if ( ($_SESSION['user_id'] != $_GET['user_id']) && $_SESSION['is_admin'] == false){
     header("Location: profile.php");
     die();
 }
@@ -80,7 +80,7 @@ $num_req_made = $result_made->num_rows;
                     <th>Type</th>
                     <th>Price</th>
                     <th>Status</th>
-                    <th>Action</th> <!-- Display buttons to accept, reject -->
+                    <?php echo (!$_SESSION['is_admin'] && ($_SESSION['user_id'] != $_GET['user_id']) ) ? '<th>Action</th>': ''?> <!-- Display buttons to accept, reject -->
                 </tr>
             </thead>
 
@@ -105,10 +105,12 @@ $num_req_made = $result_made->num_rows;
                         else echo "Pending";
                     ?>
                     </td>
-                    <td>
-                        <a type="button" class="btn btn-success" href="accept_request.php?booking_id=<?=$row_req_rec['booking_id']?>">Accept</a>
-                        <a type="button" class="btn btn-danger" href="reject_request.php?booking_id=<?=$row_req_rec['booking_id']?>">Reject</a>
-                    </td>
+                    <?php echo (!$_SESSION['is_admin'] && ($_SESSION['user_id'] != $_GET['user_id']) )?
+                    '<td>' .
+                        '<a type="button" class="btn btn-success" href="accept_request.php?booking_id=' . $row_req_rec['booking_id'] . '>Accept</a>'.
+                        '<a type="button" class="btn btn-danger" href="reject_request.php?booking_id=' . $row_req_rec['booking_id']. '>Reject</a>
+                    </td>': '';
+                    ?>
                 </tr>
             <?php
             endwhile; // $row_req_rec = $result_rec->fetch_assoc()
@@ -120,7 +122,10 @@ $num_req_made = $result_made->num_rows;
         <?php
         } // if ($num_req_rec > 0)
         else{ // This user's properties didn't receive any requests
-            echo "<h3 class='alert alert-info'>You didn't receive any request so far!</h3>";
+            if( $_SESSION['is_admin'])
+                echo "<h3 class='alert alert-info'>This user didn't receive any request so far!</h3>";
+            else
+                echo "<h3 class='alert alert-info'>You didn't receive any request so far!</h3>";
         }
         ?>
         </div>
@@ -145,7 +150,8 @@ $num_req_made = $result_made->num_rows;
                     <th>Type</th>
                     <th>Price</th>
                     <th>Status</th>
-                    <th>Action</th> <!-- Display buttons to cancel request -->
+
+                    <?php echo (!$_SESSION['is_admin'] && ($_SESSION['user_id'] != $_GET['user_id']) ) ? '<th>Action</th>': ''?> <!-- Display buttons to cancel request -->
                 </tr>
             </thead>
 
@@ -173,10 +179,12 @@ $num_req_made = $result_made->num_rows;
                         else echo "Pending";
                     ?>
                     </td>
-                    <td>
-                        <a type="button" class="btn btn-primary" href="view_property.php?prop_id=<?=$row_req_made['property_id']?>">View</a>
-                        <a type="button" class="btn btn-danger" href="cancel_request.php?booking_id=<?=$row_req_made['booking_id']?>">Cancel</a>
-                    </td>
+                    <?php echo (!$_SESSION['is_admin'] && ($_SESSION['user_id'] != $_GET['user_id']) )?
+                    '<td>'.
+                        '<a type="button" class="btn btn-primary" href="view_property.php?prop_id=' . $row_req_made['property_id']. '>View</a>'.
+                        '<a type="button" class="btn btn-danger" href="cancel_request.php?booking_id=' . $row_req_made['booking_id'] . '>Cancel</a>
+                    </td>': '';
+                    ?>
                 </tr>
             <?php
                 endwhile; // $row_req_made = $result_made->fetch_assoc()
@@ -189,7 +197,10 @@ $num_req_made = $result_made->num_rows;
         <?php
         } // if ($row_req_made > 0)
         else{ // This user didn't make any requests
-            echo "<h3 class='alert alert-info'>You didn't make any request so far!</h3>";
+            if( $_SESSION['is_admin'])
+                echo "<h3 class='alert alert-info'>This user didn't make any request so far!</h3>";
+            else
+                echo "<h3 class='alert alert-info'>You didn't make any request so far!</h3>";
         }
         ?>
 
