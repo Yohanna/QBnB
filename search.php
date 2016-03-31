@@ -59,11 +59,13 @@ if (userLoggedIn() == false){
  						Your search returned no result.
 						</div>";
 				}
-				else { ?>
+				else {
+			?>
 
 			<table class="table table-bordered table-hover">
 				<thead>
 					<tr>
+						<th> No. </th>
 						<th> Owner </th>
 						<th> Address </th>
 						<th> District </th>
@@ -74,6 +76,7 @@ if (userLoggedIn() == false){
 				</thead>
 				<tbody>
 				<?php
+					$i = 1;
 					while ($row = $result->fetch_assoc()) {
 						$supp_id = $row['supplier_id'];
 						$prop_id = $row['property_id'];
@@ -84,18 +87,22 @@ if (userLoggedIn() == false){
 
 						$str = "SELECT FName, LName FROM users WHERE user_id = '$supp_id'";
 						$result2 = $con->query($str);
-						$usr = $result2->fetch_assoc(); ?>
-						<?php
+						$usr = $result2->fetch_assoc();
+
 						echo "<tr>";
+						echo "<td>" . $i . "</td>";
 						echo "<td> " .$usr['FName']." ".$usr['LName']." </td>";
 						echo "<td> $address </td>";
 						echo "<td> $district </td>";
 						echo "<td> $type </td>";
-						echo "<td> $price </td>"; ?>
+						echo "<td> $price </td>";
+						?>
+
                         <td><a type="button" class="btn btn-info" href="view_property.php?prop_id=<?= $prop_id ?>">View</a></td>
 
 						<?php echo "</tr>";
-					}
+						$i++;
+					} // end while
 				}
 			?>
 				</tbody>
