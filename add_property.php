@@ -102,6 +102,18 @@ if(isset($_POST['submitBtn'])){
                 <option value="Apartment">Apartment</option>
             </select><br>
 
+            <br>Features:
+
+            <label class="checkbox-inline"><input type="checkbox" value="1" name="internet">Internet</label>
+            <label class="checkbox-inline"><input type="checkbox" value="1" name="gym">Gym</label>
+            <label class="checkbox-inline"><input type="checkbox" value="1" name="pet_allowed">Pets Allowed</label>
+            <label class="checkbox-inline"><input type="checkbox" value="1" name="tv">TV</label>
+            <label class="checkbox-inline"><input type="checkbox" value="1" name="washer">Washer</label>
+            <label class="checkbox-inline"><input type="checkbox" value="1" name="parking">Parking</label>
+            <label class="checkbox-inline"><input type="checkbox" value="1" name="patio">Patio</label>
+
+            <hr class = "colorgraph"> <br>
+
             <br><input type="submit" class="btn btn-lg btn-primary btn-block" name="submitBtn" value="Submit" />
     </div>
     </form>
