@@ -11,7 +11,7 @@ require_once 'header.php';
 require_once 'navbar.php';
 
 // Check if there's a logged in user
-if( userLoggedIn() == False && ( isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == False) ) {
+if( userLoggedIn() == False || ( isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == False) ) {
   header("Location: index.php");
   die();
 }
@@ -36,28 +36,29 @@ if( userLoggedIn() == False && ( isset($_SESSION['is_admin']) && $_SESSION['is_a
             <tr>
               <th>Booking id</th>
               <th>Consumer id</th>
-              <th>Checkedin Date</th>
-              <th>rateing</th>
+              <th>Check In Date</th>
+              <th>rating</th>
             </tr>
             </thead>
             <tbody>
             <?php
-            	$str = "SELECT booking_id, status, check_in, tenant_id FROM bookings WHERE property_id = '$id'";
-				$result = $con->query($str);
-				while($row = mysqli_fetch_array($result)) {
-					$book_id = $row["booking_id"];
-					$status = $row["status"];
-					$checkin = $row["check_in"];
-					$tenant_id = $row["tenant_id"];
-					$str2 = "SELECT rating FROM comments WHERE property_id='$id' AND commenter_id='$tenant_id'";
-					$result2 = $con->query($str);
-					$row2 = mysqli_fetch_array($result)
-            ?>
+          	$str = "SELECT booking_id, status, check_in, tenant_id FROM bookings WHERE property_id = '$id'";
+    				$result = $con->query($str);
+    				while($row = mysqli_fetch_array($result)) {
+    					$book_id = $row["booking_id"];
+    					$status = $row["status"];
+    					$checkin = $row["check_in"];
+    					$tenant_id = $row["tenant_id"];
+
+    					$str2 = "SELECT rating FROM comments WHERE property_id='$id' AND commenter_id='$tenant_id'";
+    					$result2 = $con->query($str);
+    					$row2 = mysqli_fetch_array($result)
+                ?>
             	<td><?php echo $book_id; ?></td>
             	<td><?php echo $tenant_id; ?></td>
             	<td><?php echo $checkin; ?></td>
             	<td><?php echo $row2['rating']; ?></td>
-            <?php
+          <?php
             }
             ?>
             </tbody>
