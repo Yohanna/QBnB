@@ -272,7 +272,7 @@ if (userLoggedIn() == false){
 							$result = $con->query($str);
 							$str2 = "SELECT comment_id FROM comments WHEREproperty_id='$id' AND tenant_id =".$_SESSION['user_id'];
 							$result2 = $con->query($str2);
-							if ($result->num_rows > 0 && $result->num_rows > $result2->num_rows) { ?>
+							if ($result->num_rows > 0 ) { ?>
 								<form action="view_property.php?prop_id='$id'" method="post" class="form-horizontal" role="comment">
 									<div class="form-group">
 										<div>

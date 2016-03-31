@@ -41,7 +41,7 @@ if(isset($_POST['submitBtn'])){
 
     // At this point we should have checked all the user input for errors
     if ($validForm == true){
-        $query = "INSERT INTO `properties` (`supplier_id`, `address`, `district`, `type`, `price`, `is_deleted`) VALUES (?, ?, ?, ?, ?, 0)";
+        $query = "INSERT INTO `properties` (`supplier_id`, `address`, `district`, `type`, `price`) VALUES (?, ?, ?, ?, ?)";
 
         $stmt = $con->prepare($query);
 
