@@ -61,7 +61,7 @@ if (userLoggedIn() == false){
 				}
 				else { ?>
 
-			<table class="table table-hover">
+			<table class="table table-bordered table-hover">
 				<thead>
 					<tr>
 						<th> Owner </th>
@@ -87,12 +87,13 @@ if (userLoggedIn() == false){
 						$usr = $result2->fetch_assoc(); ?>
 						<?php
 						echo "<tr>";
-						echo "<th> " .$usr['FName']." ".$usr['LName']." </th>";
-						echo "<th> '$address' </th>";
-						echo "<th> '$district' </th>";
-						echo "<th> '$type' </th>";
-						echo "<th> '$price' </th>"; ?>
-                        <th><a href="view_property.php?prop_id=<?= $prop_id ?>">Browse</a></th>
+						echo "<td> " .$usr['FName']." ".$usr['LName']." </td>";
+						echo "<td> $address </td>";
+						echo "<td> $district </td>";
+						echo "<td> $type </td>";
+						echo "<td> $price </td>"; ?>
+                        <td><a type="button" class="btn btn-info" href="view_property.php?prop_id=<?= $prop_id ?>">View</a></td>
+
 						<?php echo "</tr>";
 					}
 				}

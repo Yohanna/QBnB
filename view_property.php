@@ -46,7 +46,8 @@ if (userLoggedIn() == false){
 				$result = $con->query($str);
 				if (!($result))
 					echo "Insertion Error AT Request";
-				else ?>
+				else
+				?>
 					<script type="text/javascript">
 					alert("Your request has been sent.");
 					window.location.href = "search.php";
@@ -93,7 +94,7 @@ if (userLoggedIn() == false){
 			$row = mysqli_fetch_array($result);
 			echo "<form action='view_property.php?prop_id=".$id."' method='post' class = 'form-horizontal' role = 'form'>";
 			echo "<div class = 'form-group'>";
-			if (($row['status'] != null && $row['status']!="") && $row['status'] == 3) 
+			if (($row['status'] != null && $row['status']!="") && $row['status'] == 3)
 				echo "<button type='button' class='btn btn-default disabled'>Request Under Processing </button>";
 			else {
 				echo "<div class='row col-sm-offset-0'>";
