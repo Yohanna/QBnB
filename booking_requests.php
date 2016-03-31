@@ -56,7 +56,7 @@ $num_req_made = $result_made->num_rows;
 <html>
 <head>
     <title>Booking Requests</title>
-    <h1 style="text-align: center;">Here's a list of request you have received or made.</h1>
+    <h1 style="text-align: center;">Here's a list of requests you have received or made.</h1>
 </head>
 <body>
     <div class="container">
