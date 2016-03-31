@@ -15,6 +15,12 @@ if(userLoggedIn() == false){
 }
 
 
+// This page should only be viewed by Admins or if the _SESSION['user_id'] == _GET['user_id']
+if ($_SESSION['is_admin'] == False || ($_SESSION['user_id'] != $_GET['user_id'])){
+    header("Location: profile.php");
+    die();
+}
+
 // Get list of properties that user owns and a request has been made to rent them.
 
 
