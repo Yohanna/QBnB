@@ -268,10 +268,11 @@ if (userLoggedIn() == false){
 					</div>
 					<div class="container" style="position: absolute; top: 500px;">
 						<?php
-							$str = "SELECT * FROM bookings WHERE tenant_id =".$_SESSION['user_id'];
+							$str = "SELECT * FROM bookings WHERE property_id='$id' AND status = 1 AND tenant_id =".$_SESSION['user_id'];
 							$result = $con->query($str);
-							$row = mysqli_fetch_array($result);
-							if ($row['booking_id'] != null && $row['booking_id'] != "" && $row['status'] == 1) { ?>
+							$str2 = "SELECT comment_id FROM comments WHEREproperty_id='$id' AND tenant_id =".$_SESSION['user_id'];
+							$result2 = $con->query($str2);
+							if ($result->num_rows > 0 && $result->num_rows > $result2->num_rows) { ?>
 								<form action="view_property.php?prop_id='$id'" method="post" class="form-horizontal" role="comment">
 									<div class="form-group">
 										<div>
