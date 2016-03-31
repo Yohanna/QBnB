@@ -4,7 +4,7 @@ require_once 'navbar.php';
 ?>
 
 <?php
-	
+
 	// If no logged in user is found or if the current logged in user is NOT an admin
 if(userLoggedIn() == false || (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == false) ){
     header("Location: profile.php"); // If not logged in user was found, profile.php will redirect to index.php
@@ -25,7 +25,7 @@ if(isset($_POST['cancelBtn'])){
         echo "Error Canceling Ruquest".nl;
     }
     else {
-        header("Location: booking_requests.php");
+        header("Location: booking_requests.php?user_id=" . $_SESSION['user_id']);
         die();
     }
 }
