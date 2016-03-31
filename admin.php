@@ -153,6 +153,7 @@ else { // No logged in user
           <th>Graduation Year</th>
           <th>Faculty</th>
           <th>Degree Type</th>
+          <th>History</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -177,6 +178,7 @@ else { // No logged in user
             <td><?= $users['grad_year']?></td>
             <td><?= $users['faculty_id']?></td>
             <td><?= $users['degree_type'] ?></td>
+            <td><a type="button" class="btn btn-info" href=<?php echo "view_user_history.php?user_id=" . $users['user_id']?> > View User History</a></td>
             <td><a type="button" class="btn btn-danger" href=<?php echo "delete_user.php?user_id=" . $users['user_id']?> > Delete User</a></td>
           </tr>
 
