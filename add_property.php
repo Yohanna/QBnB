@@ -34,7 +34,7 @@ if(isset($_POST['submitBtn'])){
 
             // If an address is found
             if($num>0){
-                $addressError = '<br><p class="bg-danger text-center">This address already exists!</p>';
+                $addressError = '<br><p class="alert alert-danger text-center">This address already exists!</p>';
                 $validForm = false;
             }
     }
@@ -48,16 +48,17 @@ if(isset($_POST['submitBtn'])){
         $stmt->bind_param("isssi", $_SESSION['user_id'], $Address, $District, $Type, $Price);
 
         if ($stmt->execute()){
-            $userMsg = '<br><p class="bg-success text-center">Your property has been added to QBnB</p>';
-            // header("Location: user_properties.php");
-            // die();
+            echo '<script type="text/javascript">
+            alert("Your property has been added successfully!");
+            window.location.href = "user_properties.php";
+            </script>';
         }
         else{
-            $userMsg = '<br><p class="bg-danger text-center">Execute Failed</p>';
+            $userMsg = '<br><p class="alert alert-danger text-center">Execute Failed</p>';
         }
     }
     else{
-        $userMsg = '<br><p class="bg-danger text-center">Failed to add property</p>';
+        $userMsg = '<br><p class="alert alert-danger text-center">Failed to add property</p>';
     }
 
 }

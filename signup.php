@@ -3,17 +3,13 @@
 require_once 'header.php';
 require_once 'navbar.php';
 
-?>
-
-<?php
 
 if(isset($_POST['submitBtn'])){
-
-    // Validation Errors
 
     $userMsg = '';
     $validForm = True;
 
+    // Validation Errors
     $emailError = '';
     $passError = '';
 
@@ -35,7 +31,7 @@ if(isset($_POST['submitBtn'])){
     //Check if the Email is a valid email
     if (filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
         $validForm = false;
-        $emailError = '<br><p class="bg-danger text-center">Please enter a valid Email</p>';
+        $emailError = '<br><p class="alert alert-danger text-center">Please enter a valid Email</p>';
     }
     else{ // If the email was valid, then check if it already exists in the db.
         $query = "SELECT email FROM users WHERE email=?";
@@ -50,7 +46,7 @@ if(isset($_POST['submitBtn'])){
 
             // If an email is found
             if($num>0){
-                $emailError = '<br><p class="bg-danger text-center">This email is already registered!</p>';
+                $emailError = '<br><p class="alert alert-danger text-center">This email is already registered!</p>';
                 $validForm = false;
             }
         }
@@ -59,7 +55,7 @@ if(isset($_POST['submitBtn'])){
 
     // Check if the password match
     if($password != $repassword){
-        $passError = '<br><p class="bg-danger text-center">The passwords don\'t match</p>';
+        $passError = '<br><p class="alert alert-danger text-center">The passwords don\'t match</p>';
 
         $validForm = false;
     }
@@ -76,29 +72,30 @@ if(isset($_POST['submitBtn'])){
         $stmt->bind_param("sssssiiis", $FName, $LName, $gender, $email, $password, $phone_no, $grad_year, $faculty_id, $degree_type);
 
         if ($stmt->execute()){
-            $userMsg = '<br><p class="bg-success text-center">Your Account has been created</p>';
-            header("Location: profile.php");
-            die();
+            echo '<script type="text/javascript">
+            alert("Your Account has been created!\nPlease Login to confirm registration.");
+            window.location.href = "profile.php";
+            </script>';
         }
         else{
-            $userMsg = '<br><p class="bg-danger text-center">Execute Failed</p>';
+            $userMsg = '<br><p class="alert alert-danger text-center">Execute Failed</p>';
         }
     }
     else{
-        $userMsg = '<br><p class="bg-danger text-center">Failed to create account</p>';
+        $userMsg = '<br><p class="alert alert-danger text-center">Failed to create account</p>';
     }
 
 }
 ?>
 
-<head>
+<html>
 
+<head>
 </head>
 
-<html>
 <body>
 
-	<form action="" method="post">
+	<form action="signup.php" method="post">
     <div class = "container">
             <h1 class = "form-signin-heading text-center">Sign Up</h1>
             <hr class = "colorgraph"> <br>

@@ -41,8 +41,10 @@ if(isset($_POST['deleteBtn'])){
         echo "Error Deleting User".nl;
     }
     else {
-        header("Location: admin.php");
-        die();
+        echo '<script type="text/javascript">
+        alert("User has been successfully deleted!");
+        window.location.href = "admin.php";
+        </script>';
     }
 }
 
