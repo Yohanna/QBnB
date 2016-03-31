@@ -15,3 +15,26 @@ background-color: rgba(255,255,255,0.8);
 /*text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;*/
 /*text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;*/
 }
+
+/*
+
+// Add the class btn-outline to a make an outline button.
+
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover {
+    color: #fff;
+}*/
+

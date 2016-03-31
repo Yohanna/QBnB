@@ -4,9 +4,9 @@ require_once 'navbar.php';
 ?>
 
 <?php
-	
+
 	// If no logged in user is found or if the current logged in user is NOT an admin
-if(userLoggedIn() == false || (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == false) ){
+if(userLoggedIn() == false ){
     header("Location: profile.php"); // If not logged in user was found, profile.php will redirect to index.php
     die();
 }
