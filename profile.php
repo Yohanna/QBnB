@@ -51,6 +51,7 @@ $facultyName = $result->fetch_assoc();
             <div class="row text-center" >
                 <div class="col-sm-12">
                     <a type="button" class="btn btn-lg btn-primary" style="align: center;" href="edit_profile.php">Edit Your Profile</a>
+                    <a type="button" class="btn btn-lg btn-danger" style="align: center;" href="delete_user.php?user_id=<?= $_SESSION['user_id'] ?>">Delete Your Profile</a>
                 </div>
             </div>
         </div>
