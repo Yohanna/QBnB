@@ -132,6 +132,8 @@ else { // No logged in user
 
     $num = $result->num_rows;
 
+
+
     if($num == 0) // No users currently registered in QBnB
       echo "<h3>Other than you, there are currently no users registered in QBnB</h3>";
     else{
@@ -161,6 +163,16 @@ else { // No logged in user
         $i = 1;
         while($users = $result->fetch_assoc()):
 
+          // Get Faculty name from Facutlies table
+          $query = "SELECT faculty FROM faculties WHERE faculty_id=?";
+
+          $stmt = $con->prepare($query);
+          $stmt->bind_Param("i", $users['faculty_id']);
+          $stmt->execute();
+          $result_fac_name = $stmt->get_result();
+
+          $facultyName = $result_fac_name->fetch_assoc();
+
           // If the current user is the logged in user, skip that user since Admins can't
           // delete themselves.
           if($users['user_id'] == $_SESSION['user_id'])
@@ -174,7 +186,7 @@ else { // No logged in user
             <td><?= $users['email']?></td>
             <td><?= $users['phone_no']?></td>
             <td><?= $users['grad_year']?></td>
-            <td><?= $users['faculty_id']?></td>
+            <td><?= $facultyName['faculty']?></td>
             <td><?= $users['degree_type'] ?></td>
             <td><a type="button" class="btn btn-danger" href=<?php echo "delete_user.php?user_id=" . $users['user_id']?> > Delete User</a></td>
           </tr>
