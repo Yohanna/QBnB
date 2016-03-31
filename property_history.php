@@ -7,46 +7,11 @@
 */
 
 
-
 require_once 'header.php';
 require_once 'navbar.php';
 
 // Check if there's a logged in user
-if( userLoggedIn() ) {
-
-  // Check if the logged in user is an admin
-  $query = "SELECT is_admin FROM users WHERE user_id=?";
-
-  // prepare query for execution
-  if($stmt = $con->prepare($query)){
-
-      $stmt->bind_Param("s", $_SESSION['user_id']);
-      $stmt->execute();
-      $result = $stmt->get_result();
-
-      $num = $result->num_rows;;
-
-      if($num>0){
-
-          //If the user_id matches a user in our db, get the is_admin value
-          $row = $result->fetch_assoc();
-
-          // If the current logged in user is NOT an admin, redirect to profile.php
-          if($row['is_admin'] == 0){
-              header("Location: profile.php");
-              die();
-          }
-      }
-
-  }
-  else {
-    echo "Failed to prepare the SQL";
-    // If we can't check if the
-    header("Location: profile.php");
-    die();
-  }
-}
-else { // No logged in user
+if( userLoggedIn() == False && ( isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == False) ) {
   header("Location: index.php");
   die();
 }
@@ -58,7 +23,7 @@ else { // No logged in user
 	}
 ?>
 
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<title> Property History </title>
