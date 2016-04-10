@@ -115,7 +115,7 @@ if (userLoggedIn() == false){
 
 
 		<div class="col-sm-15">
-			<ul class="nav nav-tabs" id="prop_tab">
+			<ul class="nav nav-tabs nav-justified" id="prop_tab">
 				<li class="active"><a href="#property" data-toggle="tab"> Property Info </a></li>
 				<li><a href="#user_info" data-toggle="tab"> Owner Info </a></li>
 				<li><a href="#comments" data-toggle="tab"> Comments </a></li>
