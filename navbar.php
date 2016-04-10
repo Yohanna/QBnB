@@ -38,17 +38,27 @@ if( userLoggedIn() ){
                         <!-- Right Navbar section -->
                         <ul class="nav navbar-nav navbar-right">
 
+                        <!-- User's name dropdown menu -->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <?= $row['FName'] . ' ' . $row['LName']?>
+                            <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                              <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+
                         <?php
-
-                        // Display who's signed in
-                        echo '<li><p class="navbar-text">Signed in as '.$row['FName'] . ' ' . $row['LName'].'</p></li>
-                            <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a></li>';
-
                         // Display Admin link in navbar if current logged in user is an admin
                         if(isset($_SESSION['is_admin']) && $_SESSION['is_admin']){
                             echo '<li><a href="admin.php"><span class="glyphicon glyphicon-eye-open"></span> Admin</a></li>';
                         }
-                    echo '<li><a href="index.php?logout=1"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>';
+                        ?>
+
+                        <li class="divider"></li>
+                        <li><a href="index.php?logout=1"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+
+                            </ul>
+                        </li>
+
+                    <?php
                     } // if(userLoggedIn())
                     else{
                         echo '<ul class="nav navbar-nav navbar-right">';
