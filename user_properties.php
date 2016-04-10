@@ -7,7 +7,7 @@ require_once 'navbar.php';
 
 ?>
 
-
+<!DOCTYPE HTML>
 <html>
 <body>
     <?php

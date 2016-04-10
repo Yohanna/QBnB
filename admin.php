@@ -54,7 +54,7 @@ else { // No logged in user
 // At this point we should have made sure the current logged in user is an admin
 ?>
 
-
+<!DOCTYPE HTML>
 <html>
 <body>
 

@@ -66,6 +66,7 @@ if(isset($_POST['submitBtn'])){
 ?>
 
 
+<!DOCTYPE HTML>
 <html>
 
 <head>

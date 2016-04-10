@@ -15,9 +15,8 @@ if( userLoggedIn() ){
 
 ?>
 
+<!DOCTYPE HTML>
 <html>
-    <!DOCTYPE html>
-    <html lang="en">
         <head></head>
         <body>
             <nav class="navbar navbar-inverse">
