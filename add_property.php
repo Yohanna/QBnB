@@ -65,7 +65,6 @@ if(isset($_POST['submitBtn'])){
 
 ?>
 
-
 <!DOCTYPE HTML>
 <html>
 
@@ -112,6 +111,11 @@ if(isset($_POST['submitBtn'])){
             <label class="checkbox-inline"><input type="checkbox" value="1" name="washer">Washer</label>
             <label class="checkbox-inline"><input type="checkbox" value="1" name="parking">Parking</label>
             <label class="checkbox-inline"><input type="checkbox" value="1" name="patio">Patio</label>
+
+            <br>
+
+            <br><label class="control-label">Select a property image to upload:</label>
+            <input class="" type="file" name="property_pic" id="fileToUpload">
 
             <hr class = "colorgraph"> <br>
 
