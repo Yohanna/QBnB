@@ -37,13 +37,8 @@ if(isset($_POST['loginBtn'])){
         // prepare query for execution
         if($stmt = $con->prepare($query)){
 
-            // bind the parameters.
             $stmt->bind_Param("ss", $_POST['email'], $_POST['password']);
-
-            // Execute the query
             $stmt->execute();
-
-            // Get Results
             $result = $stmt->get_result();
 
             // Get the number of rows returned
@@ -67,7 +62,7 @@ if(isset($_POST['loginBtn'])){
             } else {
                 //If the email/password doesn't match a user in our database
                 // Display an error message and the login form
-                echo '<br><p class="alert alert-danger text-center">Failed to login. Wrong Email or Password</p>';
+                echo '<br><p class="alert alert-danger text-center col-md-4 col-md-offset-4">Failed to login. Wrong Email or Password</p>';
             }
         }
         else {
@@ -82,44 +77,42 @@ if(isset($_POST['loginBtn'])){
 <!DOCTYPE HTML>
 <html>
     <head>
-    <link rel="stylesheet" href="css/qbnb.css">
+        <link rel="stylesheet" href="css/qbnb.css">
     </head>
 
     <body>
 
-    <form action="index.php" method="post">
-    <div class = "container">
-            <h2 class = "form-signin-heading text-center"> Welcome to QBnB, Please Log In or Register</h2>
-            <hr class = "colorgraph"> <br>
+        <div class="container col-md-4 col-md-offset-4">
+        <form action="index.php" method="post">
+                <h2 class = "form-signin-heading text-center"> Welcome to QBnB<br>Please Log In or Register</h2>
+                <hr class = "colorgraph"> <br>
 
-            <!-- Login Form Email Address -->
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-envelope"></span>
-                </span>
-                <input type="text"  class="form-control" name="email" placeholder="Email" required="" autofocus=""/>
-            </div>
+                <!-- Login Form Email Address -->
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </span>
+                    <input type="text"  class="form-control" name="email" placeholder="Email" required="" autofocus=""/>
+                </div>
 
-            <br>
+                <br>
 
-            <!-- Login Form Password -->
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-lock"></span>
-                </span>
-            <input type="password" class="form-control" name="password" placeholder = "Password" required=""/>
-            </div>
+                <!-- Login Form Password -->
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-lock"></span>
+                    </span>
+                <input type="password" class="form-control" name="password" placeholder = "Password" required=""/>
+                </div>
 
-            <br>
-            <input type="submit" class="btn btn-lg btn-primary btn-block" name="loginBtn" value="Log In" />
-    </div>
-    </form>
+                <br>
+                <input type="submit" class="btn btn-lg btn-primary btn-block" name="loginBtn" value="Log In" />
+        </form>
 
-    <div class="container">
-        <hr class = "colorgraph">
-        <h3 class="text-center">You say what?! You're not a member!!!</h3> <br>
-        <a type="button" class="btn btn-lg btn-primary btn-block" href="signup.php">Hurry Sign Up!</a>
-    </div>
+            <hr class = "colorgraph">
+            <a type="button" class="btn btn-lg btn-primary btn-block" href="signup.php">Register</a>
+        </div>
+
 
     </body>
 </html>
