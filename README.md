@@ -4,5 +4,5 @@ QBnB is a similar service to AirBnB but specifically made for Queen's University
 
 
 ### Technologies Used
-* `PHP` and `MySQL` was used in the backend to handle all logic.
-* `Bootstrap` was used at the frontend to make it look fancy.
+* `PHP` and `MySQL` were used in the back end to handle all logic.
+* `Bootstrap` was used at the front end to make everything look fancy.
