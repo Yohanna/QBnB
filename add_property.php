@@ -74,7 +74,7 @@ if(isset($_POST['submitBtn'])){
 <body>
 
     <form action="add_property.php" method="post">
-    <div class = "container">
+    <div class = "container col-md-6 col-md-offset-3">
             <h1 class = "form-signin-heading text-center">Add a new property to QBnB</h1>
 
             <hr class = "colorgraph"> <br>
@@ -119,7 +119,7 @@ if(isset($_POST['submitBtn'])){
 
             <hr class = "colorgraph"> <br>
 
-            <br><input type="submit" class="btn btn-lg btn-primary btn-block" name="submitBtn" value="Submit" />
+            <br><input type="submit" class="btn btn-lg btn-primary btn-block" name="submitBtn" value="Submit" /><br>
     </div>
     </form>
 

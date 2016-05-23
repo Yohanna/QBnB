@@ -97,7 +97,7 @@ if(isset($_POST['submitBtn'])){
 <body>
 
 	<form action="signup.php" method="post">
-    <div class = "container">
+    <div class = "container col-md-6 col-md-offset-3">
             <h1 class = "form-signin-heading text-center">Sign Up</h1>
             <hr class = "colorgraph"> <br>
 
@@ -129,7 +129,7 @@ if(isset($_POST['submitBtn'])){
 				<option value="2">Education</option>
 				<option value="3">Engineering and Applied Science</option>
 				<option value="4">Commerce</option>
-			</select><br>
+			</select>
 
 			<br>Degree Type:
 			<select class="form-control" name="degree_type">
@@ -141,7 +141,7 @@ if(isset($_POST['submitBtn'])){
 				<option value="BSC">BSC</option>
 			</select><br>
 
-            <br><input type="submit" class="btn btn-lg btn-primary btn-block" name="submitBtn" value="Submit" />
+            <br><input type="submit" class="btn btn-lg btn-primary btn-block" name="submitBtn" value="Submit" /><br>
     </div>
     </form>
 
