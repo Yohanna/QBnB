@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2016 at 10:02 PM
+-- Generation Time: May 23, 2016 at 06:06 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `bookings` (
   UNIQUE KEY `check_in` (`check_in`,`property_id`,`tenant_id`),
   KEY `property_id_index` (`property_id`) USING BTREE,
   KEY `tenant_id_index` (`tenant_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for booking info, with status being a flag (Ints)';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='A table for booking info, with status being a flag (Ints)';
 
 --
 -- RELATIONS FOR TABLE `bookings`:
@@ -56,8 +56,9 @@ INSERT INTO `bookings` (`booking_id`, `status`, `check_in`, `property_id`, `tena
 (1, 1, '2016-02-17', 1, 3),
 (2, 2, '2016-02-23', 2, 2),
 (3, 3, '2016-02-17', 3, 1),
-(4, 1, '2016-03-31', 2, 7),
-(5, 2, '2016-04-27', 5, 5);
+(5, 2, '2016-04-27', 5, 5),
+(6, 3, '2016-03-07', 4, 7),
+(7, 3, '2016-04-01', 3, 7);
 
 -- --------------------------------------------------------
 
@@ -69,14 +70,14 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
   `commenter_id` int(11) NOT NULL,
   `property_id` int(11) NOT NULL,
-  `comment_text` text COLLATE utf16_unicode_520_ci NOT NULL,
+  `comment_text` text COLLATE utf8_unicode_ci NOT NULL,
   `rating` int(11) DEFAULT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_id`),
   UNIQUE KEY `property_id` (`property_id`,`commenter_id`),
   KEY `property_id_index` (`property_id`) USING BTREE,
   KEY `commenter_id_index` (`commenter_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for Comments';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='A table for Comments';
 
 --
 -- RELATIONS FOR TABLE `comments`:
@@ -103,10 +104,10 @@ INSERT INTO `comments` (`comment_id`, `commenter_id`, `property_id`, `comment_te
 --
 
 CREATE TABLE IF NOT EXISTS `districts` (
-  `District` varchar(40) COLLATE utf16_unicode_520_ci NOT NULL,
-  `POI` varchar(100) COLLATE utf16_unicode_520_ci NOT NULL,
+  `District` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `POI` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`District`,`POI`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='Table storing distract information';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Table storing distract information';
 
 --
 -- RELATIONS FOR TABLE `districts`:
@@ -119,7 +120,6 @@ CREATE TABLE IF NOT EXISTS `districts` (
 --
 
 INSERT INTO `districts` (`District`, `POI`) VALUES
-('Kanata', 'Kanata Lakes'),
 ('Nepean', 'Canadian War Museum'),
 ('Nepean', 'Parliament Hill'),
 ('Nepean', 'Rideau Canal'),
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `features` (
   `parking` tinyint(1) NOT NULL DEFAULT '0',
   `patio` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='Additional table to keep track a list of features';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Additional table to keep track a list of features';
 
 --
 -- RELATIONS FOR TABLE `features`:
@@ -228,14 +228,14 @@ INSERT INTO `pictures` (`pic_id`, `pic_path`, `property_id`) VALUES
 CREATE TABLE IF NOT EXISTS `properties` (
   `property_id` int(11) NOT NULL AUTO_INCREMENT,
   `supplier_id` int(11) NOT NULL,
-  `address` varchar(100) COLLATE utf16_unicode_520_ci NOT NULL,
-  `district` varchar(20) COLLATE utf16_unicode_520_ci NOT NULL,
-  `type` varchar(20) COLLATE utf16_unicode_520_ci NOT NULL,
+  `address` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `district` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `price` float NOT NULL COMMENT 'Price per month',
   PRIMARY KEY (`property_id`),
   KEY `supplier_id_index` (`supplier_id`) USING BTREE,
   KEY `district` (`district`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci COMMENT='A table for the property';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='A table for the property';
 
 --
 -- RELATIONS FOR TABLE `properties`:
@@ -262,19 +262,19 @@ INSERT INTO `properties` (`property_id`, `supplier_id`, `address`, `district`, `
 
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `FName` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
-  `LName` varchar(10) COLLATE utf16_unicode_520_ci NOT NULL,
-  `gender` char(1) COLLATE utf16_unicode_520_ci NOT NULL COMMENT 'F or M',
+  `FName` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `LName` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `gender` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'F or M',
   `email` varchar(32) CHARACTER SET utf8 NOT NULL,
   `password` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `phone_no` char(10) COLLATE utf16_unicode_520_ci NOT NULL,
+  `phone_no` char(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `grad_year` year(4) NOT NULL,
   `faculty_id` int(10) NOT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
-  `degree_type` varchar(5) COLLATE utf16_unicode_520_ci NOT NULL,
+  `degree_type` varchar(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`user_id`),
   KEY `faculty_id_index` (`faculty_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `users`:
@@ -291,10 +291,9 @@ INSERT INTO `users` (`user_id`, `FName`, `LName`, `gender`, `email`, `password`,
 (2, 'Mai', 'Wu', 'F', 'mai_wu@queensu.ca', 'pass', '1234567899', 2004, 3, 0, 'Ba'),
 (3, 'Jeffery', 'Lin', 'M', 'jeffery_lin@queensu.ca', 'pass', '1234567889', 2001, 2, 0, 'Bcs'),
 (5, 'Dylan', 'Liu', 'M', 'dl@queensu.ca', 'pass', '6133333333', 2017, 1, 0, 'BAs'),
-(6, 'Jack', 'Qiao', 'M', 'jq@queensu.ca', 'pass', '6133333333', 2017, 1, 0, 'BAs'),
-(7, 'Yohanna', 'Gadelrab', 'M', 'y', '1234', '3333333333', 2017, 3, 1, 'B.Sc.'),
-(8, 'John', 'Doe', 'M', 'J', '1234', '3433333333', 2017, 1, 0, 'BA'),
-(9, 'Yoha', 'Gad', 'F', 'adsf@ca.ca', '123', '3', 2003, 1, 0, 'BA');
+(6, 'Jack', 'Qi', 'F', 'jq@queensu.ca', 'pass', '6133333333', 2017, 1, 0, 'BA'),
+(7, 'Yohanna', 'Gadelrab', 'F', 'y@queensu.ca', 'p', '3333333333', 2017, 3, 1, 'BA'),
+(8, 'John', 'Doe', 'M', 'J', '1234', '3433333333', 2017, 1, 0, 'BA');
 
 --
 -- Constraints for dumped tables
